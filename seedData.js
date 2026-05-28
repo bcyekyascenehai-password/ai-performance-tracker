@@ -1,14 +1,14 @@
 // Seed Data for AI Learning Tracker
 
 const DEFAULT_STUDENTS = [
-  { id: "s1", name: "Aarav Sharma", joinedDate: "2026-05-01" },
-  { id: "s2", name: "Kabir Mehta", joinedDate: "2026-05-01" },
-  { id: "s3", name: "Diya Patel", joinedDate: "2026-05-02" },
-  { id: "s4", name: "Isha Iyer", joinedDate: "2026-05-02" },
-  { id: "s5", name: "Rohan Verma", joinedDate: "2026-05-03" },
-  { id: "s6", name: "Priya Nair", joinedDate: "2026-05-03" },
-  { id: "s7", name: "Amit Joshi", joinedDate: "2026-05-04" },
-  { id: "s8", name: "Neha Gupta", joinedDate: "2026-05-04" }
+  { id: "s1", name: "Vinod Sir", joinedDate: "2026-05-01" },
+  { id: "s2", name: "Aman", joinedDate: "2026-05-01" },
+  { id: "s3", name: "Raghunath", joinedDate: "2026-05-02" },
+  { id: "s4", name: "Shailesh", joinedDate: "2026-05-02" },
+  { id: "s5", name: "Loukick", joinedDate: "2026-05-03" },
+  { id: "s6", name: "Pranil", joinedDate: "2026-05-03" },
+  { id: "s7", name: "Shubham", joinedDate: "2026-05-04" },
+  { id: "s8", name: "Dinesh", joinedDate: "2026-05-04" }
 ];
 
 const DEFAULT_SUBJECTS = [

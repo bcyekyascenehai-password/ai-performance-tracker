@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tools Cohort Tracker | Performance Analytics & Leaderboard</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A premium, dark-themed cohort performance and growth dashboard for tracking skills progress, marks, and rankings across advanced AI tools.">
+  <meta name="keywords" content="AI, Prompt Engineering, Midjourney, LLM, Agents, Leaderboard, Learner Tracker">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Global App Layout -->
+  <div class="app-container">
+    
+    <!-- Application Header -->
+    <header>
+      <div class="logo">
+        <div class="logo-icon">AI</div>
+        <div class="logo-text">
+          <h1>GrowTrack</h1>
+          <p>AI Tools Cohort Dashboard</p>
+        </div>
+      </div>
+      
+      <!-- Primary Navigation -->
+      <nav class="tabs-container">
+        <button class="tab-btn active" data-tab="leaderboard" id="tab-leaderboard-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top: -2px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"/><path d="M12 2a6 6 0 0 1 6 6v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8a6 6 0 0 1 6-6z"/></svg>
+          Leaderboard
+        </button>
+        <button class="tab-btn" data-tab="dashboard" id="tab-dashboard-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top: -2px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Learner Dashboard
+        </button>
+        <button class="tab-btn" data-tab="admin" id="tab-admin-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top: -2px;"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Management View
+        </button>
+      </nav>
+    </header>
+
+    <!-- Dynamic Content Target -->
+    <main id="main-content" class="tab-content">
+      <!-- Dynamic components will render here via app.js -->
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; color: var(--text-secondary);">
+        <div style="border: 3px solid rgba(0, 242, 254, 0.2); border-top-color: #00f2fe; width: 40px; height: 40px; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1.5rem;"></div>
+        <p style="font-family: var(--font-display); font-weight: 500;">Loading Performance Modules...</p>
+      </div>
+    </main>
+
+    <!-- Application Footer -->
+    <footer>
+      <p>&copy; 2026 GrowTrack Academic Analytics. Powered by ES6 Native Architecture.</p>
+      <p style="margin-top: 0.5rem; font-size: 0.75rem;">
+        Developed for cohort groups tracking skills growth. 
+        Admin Passcode: <code style="background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 4px; color: var(--text-primary);">admin123</code>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Loading Main Script Engine -->
+  <script type="module" src="app.js"></script>
+
+  <!-- Global Loader Spin Animation -->
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</body>
+</html>

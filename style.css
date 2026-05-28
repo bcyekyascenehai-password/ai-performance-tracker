@@ -1202,3 +1202,214 @@ footer a {
 footer a:hover {
   color: #00f2fe;
 }
+
+/* ----------------------------------------------------
+   MOBILE RESPONSIVENESS MEDIA QUERIES
+   ---------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Container Padding */
+  .app-container {
+    padding: 1rem;
+  }
+  
+  /* Header Layout */
+  header {
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: center;
+    padding: 0.5rem 0 1.5rem 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .logo {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  /* Tabs Navigation wrapping */
+  .tabs-container {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+  
+  .tab-btn {
+    flex: 1 1 auto;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    justify-content: center;
+  }
+
+  /* Podium layout (Stack columns vertically) */
+  .podium-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-height: auto;
+    margin: 1.5rem 0 2.5rem 0;
+  }
+  
+  .podium-column {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .podium-column.first {
+    order: 1; /* First place is at the top of the stack */
+  }
+  
+  .podium-column.second {
+    order: 2;
+  }
+  
+  .podium-column.third {
+    order: 3;
+  }
+  
+  .podium-box {
+    height: auto !important;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.15) !important;
+    background: rgba(21, 29, 47, 0.4) !important;
+  }
+  
+  .podium-column.first .podium-box {
+    border-color: rgba(255, 215, 0, 0.3) !important;
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.08) 0%, rgba(21, 29, 47, 0.4) 100%) !important;
+  }
+  
+  /* Tables (Smaller paddings and text) */
+  th, td {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.85rem;
+  }
+  
+  .student-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+  
+  .rank-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+  }
+  
+  /* Grid layouts */
+  .grid-container-4 {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .grid-container-2 {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  /* Dashboard Controls centering */
+  .dashboard-controls {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 1.25rem;
+  }
+  
+  .select-container {
+    width: 100%;
+  }
+  
+  /* Stats Cards sizing */
+  .stat-card {
+    padding: 1rem;
+    height: 110px;
+  }
+  
+  .stat-val {
+    font-size: 1.85rem;
+  }
+  
+  /* Admin Header */
+  .admin-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  
+  .admin-controls-bar {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .admin-controls-bar .btn {
+    flex: 1 1 calc(50% - 0.25rem);
+    justify-content: center;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  /* Timeline spacing */
+  .timeline-card {
+    padding: 1.25rem;
+  }
+  
+  .timeline-list::before {
+    left: 17px;
+  }
+  
+  .timeline-marker {
+    width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+  }
+  
+  .timeline-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Grid sizes for very small devices */
+  .grid-container-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-controls-bar .btn {
+    flex: 1 1 100%;
+  }
+  
+  /* Toast Notification adjustments */
+  .toast {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    justify-content: center;
+  }
+  
+  /* Radar SVG Chart centering/scaling */
+  .chart-card {
+    padding: 1rem;
+  }
+  
+  .chart-container svg {
+    width: 100%;
+    height: auto;
+    max-width: 280px;
+  }
+  
+  /* Form buttons full width */
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

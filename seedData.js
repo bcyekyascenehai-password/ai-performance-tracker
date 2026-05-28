@@ -1,6 +1,6 @@
 // Seed Data for AI Learning Tracker
 
-export const DEFAULT_STUDENTS = [
+const DEFAULT_STUDENTS = [
   { id: "s1", name: "Aarav Sharma", joinedDate: "2026-05-01" },
   { id: "s2", name: "Kabir Mehta", joinedDate: "2026-05-01" },
   { id: "s3", name: "Diya Patel", joinedDate: "2026-05-02" },
@@ -11,7 +11,7 @@ export const DEFAULT_STUDENTS = [
   { id: "s8", name: "Neha Gupta", joinedDate: "2026-05-04" }
 ];
 
-export const DEFAULT_SUBJECTS = [
+const DEFAULT_SUBJECTS = [
   { 
     id: "sub1", 
     name: "Prompt Engineering", 
@@ -41,7 +41,7 @@ export const DEFAULT_SUBJECTS = [
 
 // Sample grades to populate the app on first load.
 // Points are on a scale of 0 to 100.
-export const DEFAULT_GRADES = [
+const DEFAULT_GRADES = [
   // Aarav Sharma
   { studentId: "s1", subjectId: "sub1", score: 92, feedback: "Excellent use of structural prompts. Very good logic breakdown.", date: "2026-05-08" },
   { studentId: "s1", subjectId: "sub2", score: 85, feedback: "Understood prompt parameters well, but could improve composition.", date: "2026-05-12" },

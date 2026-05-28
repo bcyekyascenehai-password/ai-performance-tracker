@@ -1,6 +1,4 @@
 // Main Application Logic - AI Tools Learning Tracker
-import { DEFAULT_STUDENTS, DEFAULT_SUBJECTS, DEFAULT_GRADES } from './seedData.js';
-import { renderLeaderboard, renderStudentDashboard, renderAdminPanel } from './components.js';
 
 // --- State Definition ---
 const STATE_KEY = 'ai_tracker_state';

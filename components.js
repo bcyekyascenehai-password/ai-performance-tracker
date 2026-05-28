@@ -67,7 +67,7 @@ function getIconHtml(iconName) {
 // ----------------------------------------------------
 // 1. LEADERBOARD VIEW
 // ----------------------------------------------------
-export function renderLeaderboard(state) {
+function renderLeaderboard(state) {
   const ranked = getRankings(state);
   
   if (ranked.length === 0) {
@@ -268,7 +268,7 @@ export function renderLeaderboard(state) {
 // ----------------------------------------------------
 // 2. STUDENT DASHBOARD VIEW
 // ----------------------------------------------------
-export function renderStudentDashboard(state, activeStudentId, onStudentChange) {
+function renderStudentDashboard(state, activeStudentId, onStudentChange) {
   if (state.students.length === 0) {
     return `<div class="glass-panel" style="padding: 3rem; text-align: center; color: var(--text-secondary);">No student data available. Head to Admin Panel to add students!</div>`;
   }
@@ -521,7 +521,7 @@ export function renderStudentDashboard(state, activeStudentId, onStudentChange) 
 // ----------------------------------------------------
 // 3. ADMIN PANEL VIEW
 // ----------------------------------------------------
-export function renderAdminPanel(state, actions) {
+function renderAdminPanel(state, actions) {
   // If not authenticated, render auth lock screen
   if (!state.isAdminAuthenticated) {
     return `

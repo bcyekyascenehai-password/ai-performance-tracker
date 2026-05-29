@@ -15,12 +15,15 @@ const DEFAULT_SUBJECTS = [
   { 
     id: "sub1", 
     name: "Doc to PDF with AI", 
-    description: "Converting documents to PDF using AI tools to create fully branded assets matching official guidelines." 
+    description: "Converting documents to PDF using AI tools to create fully branded assets matching official guidelines.",
+    deadline: "No active deadline"
   },
   { 
     id: "sub2", 
     name: "Index Option Tracker using Cloud", 
-    description: "Building index option tracker HTML reports using cloud services." 
+    description: "Building index option tracker HTML reports using cloud services.",
+    deadline: "2026-05-30",
+    participants: ["s1", "s2", "s3", "s4", "s7", "s8"] // Vinod Sir, Aman, Raghunath, Shailesh, Shubham, Dinesh
   }
 ];
 
@@ -54,5 +57,12 @@ const DEFAULT_GRADES = [
     score: 60, 
     feedback: "In Progress (Draft shared) (Samples Shared: 1/3, Brand Alignment: ⚪ ⚪ ⚪ ⚪ ⚪)", 
     date: "2026-05-28" 
+  },
+  { 
+    studentId: "s7", 
+    subjectId: "sub2", 
+    score: 60, 
+    feedback: "In Progress (Draft shared) (Samples Shared: 1/3, Brand Alignment: ⚪ ⚪ ⚪ ⚪ ⚪)", 
+    date: "2026-05-29" 
   }
 ];

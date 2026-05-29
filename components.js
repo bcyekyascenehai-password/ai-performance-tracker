@@ -2,15 +2,19 @@
 
 // Helper to get student stats
 function calculateStudentStats(studentId, state) {
-  const studentGrades = state.grades.filter(g => g.studentId === studentId);
-  const totalSubjects = state.subjects.length;
+  // Filter subjects where the student is actually participating
+  const enrolledSubjects = state.subjects.filter(s => !s.participants || s.participants.includes(studentId));
+  const enrolledSubjectIds = enrolledSubjects.map(s => s.id);
   
-  if (studentGrades.length === 0) {
-    return { average: 0, completedCount: 0, strength: "None", weakness: "None" };
+  const studentGrades = state.grades.filter(g => g.studentId === studentId && enrolledSubjectIds.includes(g.subjectId));
+  const enrolledCount = enrolledSubjects.length;
+  
+  if (enrolledCount === 0) {
+    return { average: 0, completedCount: 0, enrolledCount: 0, strength: "None", weakness: "None" };
   }
   
   const sum = studentGrades.reduce((acc, g) => acc + g.score, 0);
-  const average = Math.round((sum / studentGrades.length) * 10) / 10;
+  const average = studentGrades.length > 0 ? Math.round((sum / studentGrades.length) * 10) / 10 : 0;
   
   // Find strength and weakness
   let bestGrade = { score: -1, subjectId: "" };
@@ -27,6 +31,7 @@ function calculateStudentStats(studentId, state) {
   return {
     average,
     completedCount: studentGrades.length,
+    enrolledCount,
     strength: strengthSub ? strengthSub.name : "N/A",
     weakness: weaknessSub ? weaknessSub.name : "N/A"
   };
@@ -40,6 +45,7 @@ function getRankings(state) {
       ...student,
       average: stats.average,
       completedCount: stats.completedCount,
+      enrolledCount: stats.enrolledCount,
       strength: stats.strength,
       weakness: stats.weakness
     };
@@ -166,7 +172,7 @@ function renderLeaderboard(state) {
         </td>
         <td>
           <div style="color: var(--text-secondary); font-size: 0.9rem;">
-            ${student.completedCount} / ${state.subjects.length} subjects completed
+            ${student.completedCount} / ${student.enrolledCount} subjects completed
           </div>
         </td>
         <td>
@@ -318,25 +324,47 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
   let barChartsHtml = "";
   if (state.subjects.length > 0) {
     barChartsHtml = state.subjects.map(subject => {
+      const isEnrolled = !subject.participants || subject.participants.includes(currentStudent.id);
       const grade = state.grades.find(g => g.studentId === currentStudent.id && g.subjectId === subject.id);
       const score = grade ? grade.score : 0;
       const isGraded = grade !== undefined;
       
       // Select bar color based on score
       let colorClass = "var(--grad-primary)";
-      if (score >= 90) colorClass = "var(--grad-success)";
-      else if (score < 75) colorClass = "var(--grad-warning)";
+      if (!isEnrolled) {
+        colorClass = "rgba(255, 255, 255, 0.05)";
+      } else if (score >= 90) {
+        colorClass = "var(--grad-success)";
+      } else if (score < 75) {
+        colorClass = "var(--grad-warning)";
+      }
+      
+      // Render deadline tag
+      const deadlineHtml = isEnrolled && subject.deadline && subject.deadline !== "No active deadline"
+        ? `<span style="font-size: 0.7rem; background: rgba(248, 87, 166, 0.15); color: #f857a6; border: 1px solid rgba(248, 87, 166, 0.25); padding: 0.15rem 0.4rem; border-radius: 4px; margin-left: 0.5rem; font-weight: 600;">Due ${subject.deadline}</span>`
+        : "";
+        
+      // Render status text
+      let statusText = "Not Graded Yet";
+      if (!isEnrolled) {
+        statusText = "Not Enrolled";
+      } else if (isGraded) {
+        statusText = `${score} / 100`;
+      }
       
       return `
-        <div style="margin-bottom: 1.5rem;">
-          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.5rem;">
-            <span style="font-weight: 600;">${subject.name}</span>
-            <span style="font-weight: 700; ${isGraded ? 'color: #00f2fe;' : 'color: var(--text-muted);'}">
-              ${isGraded ? `${score} / 100` : 'Not Graded Yet'}
+        <div style="margin-bottom: 1.5rem; opacity: ${isEnrolled ? 1 : 0.4};">
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.5rem; align-items: center; flex-wrap: wrap; gap: 0.25rem;">
+            <span style="font-weight: 600; display: inline-flex; align-items: center;">
+              ${subject.name}
+              ${deadlineHtml}
+            </span>
+            <span style="font-weight: 700; ${isGraded && isEnrolled ? 'color: #00f2fe;' : 'color: var(--text-muted);'}">
+              ${statusText}
             </span>
           </div>
           <div style="width: 100%; height: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px; overflow: hidden; border: 1px solid var(--border-color);">
-            <div style="width: ${score}%; height: 100%; background: ${colorClass}; border-radius: 5px; box-shadow: var(--shadow-glow); transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+            <div style="width: ${isEnrolled ? score : 0}%; height: 100%; background: ${colorClass}; border-radius: 5px; box-shadow: ${isEnrolled && isGraded ? 'var(--shadow-glow)' : 'none'}; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);"></div>
           </div>
         </div>
       `;

@@ -24,6 +24,12 @@ const DEFAULT_SUBJECTS = [
     description: "Building index option tracker HTML reports using cloud services.",
     deadline: "2026-05-30",
     participants: ["s1", "s2", "s3", "s4", "s7", "s8"] // Vinod Sir, Aman, Raghunath, Shailesh, Shubham, Dinesh
+  },
+  {
+    id: "sub3",
+    name: "AI Mastermind Session",
+    description: "Attendance and active participation in the AI Mastermind Session (31 May 2026).",
+    deadline: "Completed"
   }
 ];
 
@@ -100,5 +106,62 @@ const DEFAULT_GRADES = [
     score: 0,
     feedback: "❌ No Submission (Deadline Missed)",
     date: "2026-05-30"
+  },
+  // AI Mastermind Session (sub3) Attendance
+  {
+    studentId: "s1",
+    subjectId: "sub3",
+    score: 100,
+    feedback: "Attended the AI Mastermind Session",
+    date: "2026-05-31"
+  },
+  {
+    studentId: "s2",
+    subjectId: "sub3",
+    score: 0,
+    feedback: "Absent (No attendance logged)",
+    date: "2026-05-31"
+  },
+  {
+    studentId: "s3",
+    subjectId: "sub3",
+    score: 100,
+    feedback: "Attended the AI Mastermind Session",
+    date: "2026-05-31"
+  },
+  {
+    studentId: "s4",
+    subjectId: "sub3",
+    score: 0,
+    feedback: "Absent (No attendance logged)",
+    date: "2026-05-31"
+  },
+  {
+    studentId: "s5",
+    subjectId: "sub3",
+    score: 100,
+    feedback: "Attended the AI Mastermind Session",
+    date: "2026-05-31"
+  },
+  {
+    studentId: "s6",
+    subjectId: "sub3",
+    score: 100,
+    feedback: "Attended the AI Mastermind Session",
+    date: "2026-05-31"
+  },
+  {
+    studentId: "s7",
+    subjectId: "sub3",
+    score: 100,
+    feedback: "Attended the AI Mastermind Session",
+    date: "2026-05-31"
+  },
+  {
+    studentId: "s8",
+    subjectId: "sub3",
+    score: 100,
+    feedback: "Attended the AI Mastermind Session",
+    date: "2026-05-31"
   }
 ];

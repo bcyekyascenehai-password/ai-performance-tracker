@@ -58,11 +58,47 @@ const DEFAULT_GRADES = [
     feedback: "In Progress (Draft shared) (Samples Shared: 1/3, Brand Alignment: ⚪ ⚪ ⚪ ⚪ ⚪)", 
     date: "2026-05-28" 
   },
+  // Index Option Tracker (sub2) evaluations
+  {
+    studentId: "s1",
+    subjectId: "sub2",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-05-30"
+  },
+  {
+    studentId: "s2",
+    subjectId: "sub2",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-05-30"
+  },
+  {
+    studentId: "s3",
+    subjectId: "sub2",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-05-30"
+  },
+  {
+    studentId: "s4",
+    subjectId: "sub2",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-05-30"
+  },
   { 
     studentId: "s7", 
     subjectId: "sub2", 
-    score: 60, 
-    feedback: "In Progress (Draft shared) (Samples Shared: 1/3, Brand Alignment: ⚪ ⚪ ⚪ ⚪ ⚪)", 
-    date: "2026-05-29" 
+    score: 80, 
+    feedback: "Only Submission: Shared 1 sample before the deadline closed. (Samples Shared: 1/3, Brand Alignment: ⭐⭐⭐)", 
+    date: "2026-05-30" 
+  },
+  {
+    studentId: "s8",
+    subjectId: "sub2",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-05-30"
   }
 ];

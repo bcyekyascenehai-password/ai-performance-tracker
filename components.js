@@ -230,11 +230,39 @@ function renderLeaderboard(state) {
   
   return `
     <div class="tab-content" id="view-leaderboard">
-      <div style="text-align: center; margin-bottom: 2rem;">
-        <h2 class="section-title" style="justify-content: center;">
-          ${getIconHtml('trophy')} AI Tools Cohort Leaderboard
+      
+      <!-- Onboarding Welcome Banner -->
+      <div class="glass-panel study-hero-banner" style="margin-bottom: 2.5rem; padding: 2rem; position: relative;">
+        <div style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.08; font-size: 5.5rem; pointer-events: none; user-select: none;">🎓</div>
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
+          AI Learning Lab Tracker
         </h2>
-        <p style="color: var(--text-secondary);">Real-time comparison and performance ranking of all active learners.</p>
+        <p style="color: var(--text-secondary); max-width: 850px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem;">
+          Welcome to the cohort dashboard! This page monitors learning growth, practical assignments scores, and time-based performance milestones across advanced AI tools. It is designed to help team members track their progress transparently.
+        </p>
+        <div class="hero-steps-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+            <div class="step-card-num" style="background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2);">1</div>
+            <div>
+              <h4 style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">🏆 Cohort Rankings</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Compare average marks, check leaderboard standings, and view subject-wise champions below.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+            <div class="step-card-num" style="background: rgba(127, 0, 255, 0.15); color: #c084fc; border: 1px solid rgba(127, 0, 255, 0.2);">2</div>
+            <div>
+              <h4 style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">📊 Skills Radar Map</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Switch to the <b>Learner Dashboard</b> above to inspect detailed capabilities maps and teacher reviews.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+            <div class="step-card-num" style="background: rgba(56, 239, 125, 0.1); color: #38ef7d; border: 1px solid rgba(56, 239, 125, 0.2);">3</div>
+            <div>
+              <h4 style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">⚡ Automatic Database Sync</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Updates submitted in the <b>Management View</b> sync instantly to everyone's device via GitHub.</p>
+            </div>
+          </div>
+        </div>
       </div>
       
       ${podiumHtml}
@@ -484,26 +512,30 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       
       <!-- Key Stats Grid -->
       <div class="grid-container-4">
-        <div class="glass-panel stat-card" style="border-left: 3px solid #00f2fe;">
+        <div class="glass-panel stat-card" style="border-left: 3px solid #00f2fe; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">📈</div>
           <span class="stat-label">Average Mark</span>
           <span class="stat-val text-gradient">${stats.average}<span class="points-text" style="font-size: 1.25rem;">%</span></span>
           <span class="stat-desc">Across ${stats.completedCount} graded courses</span>
         </div>
-        <div class="glass-panel stat-card" style="border-left: 3px solid #ffd700;">
+        <div class="glass-panel stat-card" style="border-left: 3px solid #ffd700; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">🏆</div>
           <span class="stat-label">Cohort Rank</span>
           <span class="stat-val" style="color: #ffd700;">#${rankIndex}</span>
           <span class="stat-desc">Out of ${state.students.length} students</span>
         </div>
-        <div class="glass-panel stat-card" style="border-left: 3px solid #38ef7d;">
+        <div class="glass-panel stat-card" style="border-left: 3px solid #38ef7d; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">💪</div>
           <span class="stat-label">Core Strength</span>
-          <span class="stat-val" style="font-size: 1.15rem; color: #38ef7d; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem;">
+          <span class="stat-val" style="font-size: 1.15rem; color: #38ef7d; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem; max-width: calc(100% - 24px);">
             ${stats.strength}
           </span>
           <span class="stat-desc">Highest scoring subject</span>
         </div>
-        <div class="glass-panel stat-card" style="border-left: 3px solid #ff5858;">
+        <div class="glass-panel stat-card" style="border-left: 3px solid #ff5858; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">🎯</div>
           <span class="stat-label">Focus Area</span>
-          <span class="stat-val" style="font-size: 1.15rem; color: #ff5858; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem;">
+          <span class="stat-val" style="font-size: 1.15rem; color: #ff5858; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem; max-width: calc(100% - 24px);">
             ${stats.weakness}
           </span>
           <span class="stat-desc">Lowest scoring subject</span>

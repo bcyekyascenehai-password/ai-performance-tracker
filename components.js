@@ -98,19 +98,42 @@ function renderLeaderboard(state) {
     return "AI Cadet 🌱";
   };
   
+  // Calculate Cohort HUD Stats
+  const studentCount = state.students.length;
+  const subjectCount = state.subjects.length;
+  const gradedList = state.grades.filter(g => g.score !== undefined);
+  const cohortAverage = gradedList.length > 0
+    ? Math.round((gradedList.reduce((sum, g) => sum + g.score, 0) / gradedList.length) * 10) / 10
+    : 0;
+    
+  // Find next upcoming deadline
+  let upcomingDeadline = "All Completed";
+  const now = new Date();
+  const futureDeadlines = state.subjects
+    .filter(s => s.deadline && s.deadline !== "Completed" && s.deadline !== "No active deadline")
+    .map(s => {
+      return { name: s.name, date: new Date(s.deadline), raw: s.deadline };
+    })
+    .filter(d => d.date >= now)
+    .sort((a, b) => a.date - b.date);
+  if (futureDeadlines.length > 0) {
+    upcomingDeadline = `Due ${futureDeadlines[0].raw}`;
+  }
+
   // Render podium columns
   let podiumHtml = "";
   if (top1 || top2 || top3) {
     podiumHtml = `
-      <div class="podium-container">
+      <div class="podium-container" style="align-items: flex-end;">
         <!-- 2nd Place -->
         ${top2 ? `
           <div class="podium-column second">
             <div class="podium-avatar">
               ${getInitials(top2.name)}
-              <div class="podium-badge">2</div>
+              <div class="podium-badge" style="background: #a8a29e;">2</div>
             </div>
-            <div class="podium-box">
+            <div class="pedestal silver" style="height: 120px;">
+              <div class="pedestal-glow"></div>
               <div class="podium-name">${top2.name}</div>
               <div class="podium-score">${top2.average}<span class="points-text">pts</span></div>
               <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem;">${getBadgeName(top2.average)}</div>
@@ -123,9 +146,10 @@ function renderLeaderboard(state) {
           <div class="podium-column first">
             <div class="podium-avatar">
               ${getInitials(top1.name)}
-              <div class="podium-badge">1</div>
+              <div class="podium-badge" style="background: #f59f00;">1</div>
             </div>
-            <div class="podium-box">
+            <div class="pedestal gold" style="height: 160px;">
+              <div class="pedestal-glow"></div>
               <div class="podium-name" style="font-weight: 700;">${top1.name}</div>
               <div class="podium-score" style="color: #ffd700;">${top1.average}<span class="points-text">pts</span></div>
               <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(255, 215, 0, 0.12); color: #ffd700; border-color: rgba(255, 215, 0, 0.2);">${getBadgeName(top1.average)}</div>
@@ -138,12 +162,13 @@ function renderLeaderboard(state) {
           <div class="podium-column third">
             <div class="podium-avatar">
               ${getInitials(top3.name)}
-              <div class="podium-badge">3</div>
+              <div class="podium-badge" style="background: #ea580c;">3</div>
             </div>
-            <div class="podium-box">
+            <div class="pedestal bronze" style="height: 90px;">
+              <div class="pedestal-glow"></div>
               <div class="podium-name">${top3.name}</div>
               <div class="podium-score">${top3.average}<span class="points-text">pts</span></div>
-              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(205, 127, 50, 0.12); color: #ffc078; border-color: rgba(205, 127, 50, 0.2);">${getBadgeName(top3.average)}</div>
+              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(234, 88, 12, 0.12); color: #ffc078; border-color: rgba(234, 88, 12, 0.2);">${getBadgeName(top3.average)}</div>
             </div>
           </div>
         ` : ''}
@@ -231,36 +256,97 @@ function renderLeaderboard(state) {
   return `
     <div class="tab-content" id="view-leaderboard">
       
-      <!-- Onboarding Welcome Banner -->
+      <!-- Collapsible Cohort Handbook Banner -->
       <div class="glass-panel study-hero-banner" style="margin-bottom: 2.5rem; padding: 2rem; position: relative;">
         <div style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.08; font-size: 5.5rem; pointer-events: none; user-select: none;">🎓</div>
         <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
           AI Learning Lab Tracker
         </h2>
-        <p style="color: var(--text-secondary); max-width: 850px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem;">
-          Welcome to the cohort dashboard! This page monitors learning growth, practical assignments scores, and time-based performance milestones across advanced AI tools. It is designed to help team members track their progress transparently.
+        <p style="color: var(--text-secondary); max-width: 850px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem;">
+          Welcome to the cohort study space! This dashboard monitors learning velocity, assignment completion, and core skill sets across advanced generative AI tools. Use this workspace to review metrics, inspect skills maps, and trace evaluations.
         </p>
-        <div class="hero-steps-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
-          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-            <div class="step-card-num" style="background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2);">1</div>
-            <div>
-              <h4 style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">🏆 Cohort Rankings</h4>
-              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Compare average marks, check leaderboard standings, and view subject-wise champions below.</p>
+        
+        <details class="handbook-accordion">
+          <summary>📖 Open Academy Handbook & Syllabus details</summary>
+          <div class="handbook-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 1.5rem;">
+              <div>
+                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">📋 Active Course Syllabus</h4>
+                <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                  ${state.subjects.map(sub => `
+                    <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-size: 0.85rem;">
+                      <strong style="color: #00f2fe;">${sub.name}</strong> - <span style="color: var(--text-secondary);">${sub.description || 'No description.'}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+              <div>
+                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">🏆 Achievement Ranking Scale</h4>
+                <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem;">
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">👑 <strong>AI Sage</strong>: Average grade of 95% or higher.</li>
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">⚡ <strong>Master Promptist</strong>: Average grade of 90% to 94.9%.</li>
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🚀 <strong>Co-Pilot Pro</strong>: Average grade of 80% to 89.9%.</li>
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🗺️ <strong>AI Navigator</strong>: Average grade of 70% to 79.9%.</li>
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🌱 <strong>AI Cadet</strong>: Initial starter grade under 70%.</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="hero-steps-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                <div class="step-card-num" style="background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2);">1</div>
+                <div>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Cohort Rankings</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Compare average marks, check leaderboard standings, and view subject-wise champions below.</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                <div class="step-card-num" style="background: rgba(127, 0, 255, 0.15); color: #c084fc; border: 1px solid rgba(127, 0, 255, 0.2);">2</div>
+                <div>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Skills Radar Map</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Switch to the <b>Learner Dashboard</b> above to inspect detailed capabilities maps and teacher reviews.</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                <div class="step-card-num" style="background: rgba(56, 239, 125, 0.1); color: #38ef7d; border: 1px solid rgba(56, 239, 125, 0.2);">3</div>
+                <div>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Automatic Sync</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Updates submitted in the <b>Management View</b> sync instantly to everyone's device via GitHub.</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-            <div class="step-card-num" style="background: rgba(127, 0, 255, 0.15); color: #c084fc; border: 1px solid rgba(127, 0, 255, 0.2);">2</div>
-            <div>
-              <h4 style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">📊 Skills Radar Map</h4>
-              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Switch to the <b>Learner Dashboard</b> above to inspect detailed capabilities maps and teacher reviews.</p>
-            </div>
+        </details>
+      </div>
+      
+      <!-- Study Desk HUD -->
+      <div class="hud-container">
+        <div class="hud-card">
+          <div class="hud-icon">👥</div>
+          <div class="hud-info">
+            <span class="hud-label">Active Cohort</span>
+            <span class="hud-value">${studentCount} Learners</span>
           </div>
-          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-            <div class="step-card-num" style="background: rgba(56, 239, 125, 0.1); color: #38ef7d; border: 1px solid rgba(56, 239, 125, 0.2);">3</div>
-            <div>
-              <h4 style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">⚡ Automatic Database Sync</h4>
-              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">Updates submitted in the <b>Management View</b> sync instantly to everyone's device via GitHub.</p>
-            </div>
+        </div>
+        <div class="hud-card purple">
+          <div class="hud-icon">📚</div>
+          <div class="hud-info">
+            <span class="hud-label">AI Syllabus</span>
+            <span class="hud-value">${subjectCount} Subjects</span>
+          </div>
+        </div>
+        <div class="hud-card gold">
+          <div class="hud-icon">📈</div>
+          <div class="hud-info">
+            <span class="hud-label">Class Average</span>
+            <span class="hud-value">${cohortAverage}%</span>
+          </div>
+        </div>
+        <div class="hud-card emerald">
+          <div class="hud-icon">🎯</div>
+          <div class="hud-info">
+            <span class="hud-label">Target Milestone</span>
+            <span class="hud-value" style="font-size: 0.95rem; line-height: 1.4;">${upcomingDeadline}</span>
           </div>
         </div>
       </div>
@@ -335,7 +421,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       return `
         <div class="timeline-item">
           <div class="timeline-marker">${g.score}</div>
-          <div class="timeline-content">
+          <div class="timeline-content sticky-note">
             <div class="timeline-header">
               <span class="timeline-subject">${subject ? subject.name : "Deleted Subject"}</span>
               <span class="timeline-date">${g.date}</span>
@@ -446,8 +532,14 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       points.push({ x, y });
     });
     
-    // Web grids
+    // Web grids with custom colored zones
     let gridsHtml = "";
+    const zoneColors = [
+      "rgba(239, 68, 68, 0.18)", // Cadet zone outline
+      "rgba(245, 158, 11, 0.18)", // Navigator zone outline
+      "rgba(59, 130, 246, 0.18)",  // Pro zone outline
+      "rgba(0, 242, 254, 0.3)"    // Sage zone outline
+    ];
     for (let level = 1; level <= 4; level++) {
       const levelRadius = (radius / 4) * level;
       const levelPoints = [];
@@ -457,7 +549,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         const ly = center + levelRadius * Math.sin(angle);
         levelPoints.push(`${lx},${ly}`);
       }
-      gridsHtml += `<polygon points="${levelPoints.join(' ')}" class="radar-level" />`;
+      gridsHtml += `<polygon points="${levelPoints.join(' ')}" class="radar-level" stroke="${zoneColors[level - 1]}" style="stroke-dasharray: ${level === 4 ? 'none' : '3,3'};" />`;
     }
     
     // Axes and Labels
@@ -556,11 +648,17 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         
         <!-- SVG Capability Map -->
         <div class="glass-panel chart-card">
-          <h3 class="chart-title" style="display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
+          <h3 class="chart-title" style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem;">
             ${getIconHtml('badge')} AI Capabilities radar
           </h3>
-          <div class="chart-container">
+          <div class="chart-container" style="flex-direction: column; height: auto;">
             ${drawCapabilitiesRadar()}
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; font-size: 0.7rem; color: var(--text-secondary);">
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #00f2fe;"></span> Sage (95+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #c084fc;"></span> Pro (80+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ffd700;"></span> Navigator (70+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ff5858;"></span> Cadet (&lt;70)</span>
+            </div>
           </div>
         </div>
       </div>

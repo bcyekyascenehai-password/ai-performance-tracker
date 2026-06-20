@@ -77,7 +77,7 @@ function renderLeaderboard(state) {
   const ranked = getRankings(state);
   
   if (ranked.length === 0) {
-    return `<div class="glass-panel" style="padding: 3rem; text-align: center; color: var(--text-secondary);">No student data available. Head to Admin Panel to add students!</div>`;
+    return `<div class="glass-panel" style="padding: 3rem; text-align: center; color: var(--text-secondary);">No crew members active. Head to Management Console to onboard growth hackers!</div>`;
   }
   
   // Identify top 3
@@ -86,16 +86,16 @@ function renderLeaderboard(state) {
   const top3 = ranked[2] || null;
   const rest = ranked.slice(3);
   
-  // Custom helper for avatar initials
+  // Custom helper for initials
   const getInitials = (name) => name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
-  // Badge thresholds
+  // Cosmic marketing badges
   const getBadgeName = (avg) => {
-    if (avg >= 95) return "AI Sage 👑";
-    if (avg >= 90) return "Master Promptist ⚡";
-    if (avg >= 80) return "Co-Pilot Pro 🚀";
-    if (avg >= 70) return "AI Navigator 🗺️";
-    return "AI Cadet 🌱";
+    if (avg >= 95) return "Quantum Sage ⚛️";
+    if (avg >= 90) return "Cosmic Promptist ☄️";
+    if (avg >= 80) return "Orbital Pro 🚀";
+    if (avg >= 70) return "Gravity Navigator 🗺️";
+    return "Cosmic Cadet 🌌";
   };
   
   // Calculate Cohort HUD Stats
@@ -107,7 +107,7 @@ function renderLeaderboard(state) {
     : 0;
     
   // Find next upcoming deadline
-  let upcomingDeadline = "All Completed";
+  let upcomingDeadline = "Orbit Stabilized";
   const now = new Date();
   const futureDeadlines = state.subjects
     .filter(s => s.deadline && s.deadline !== "Completed" && s.deadline !== "No active deadline")
@@ -117,56 +117,59 @@ function renderLeaderboard(state) {
     .filter(d => d.date >= now)
     .sort((a, b) => a.date - b.date);
   if (futureDeadlines.length > 0) {
-    upcomingDeadline = `Due ${futureDeadlines[0].raw}`;
+    upcomingDeadline = `T-Minus ${futureDeadlines[0].raw}`;
   }
 
-  // Render podium columns
+  // Render solar pedestals
   let podiumHtml = "";
   if (top1 || top2 || top3) {
     podiumHtml = `
       <div class="podium-container" style="align-items: flex-end;">
-        <!-- 2nd Place -->
+        <!-- 2nd Place: Nebula Launcher -->
         ${top2 ? `
           <div class="podium-column second">
-            <div class="podium-avatar">
+            <div class="podium-avatar" style="box-shadow: 0 0 15px rgba(168, 162, 158, 0.4);">
               ${getInitials(top2.name)}
               <div class="podium-badge" style="background: #a8a29e;">2</div>
             </div>
             <div class="pedestal silver" style="height: 120px;">
               <div class="pedestal-glow"></div>
               <div class="podium-name">${top2.name}</div>
+              <div style="font-size: 0.65rem; color: #a8a29e; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Nebula Launcher</div>
               <div class="podium-score">${top2.average}<span class="points-text">pts</span></div>
               <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem;">${getBadgeName(top2.average)}</div>
             </div>
           </div>
         ` : ''}
         
-        <!-- 1st Place -->
+        <!-- 1st Place: Solar Launchpad -->
         ${top1 ? `
           <div class="podium-column first">
-            <div class="podium-avatar">
+            <div class="podium-avatar" style="box-shadow: 0 0 25px rgba(245, 159, 0, 0.6); border-color: #ffd700;">
               ${getInitials(top1.name)}
               <div class="podium-badge" style="background: #f59f00;">1</div>
             </div>
             <div class="pedestal gold" style="height: 160px;">
               <div class="pedestal-glow"></div>
               <div class="podium-name" style="font-weight: 700;">${top1.name}</div>
+              <div style="font-size: 0.65rem; color: #ffd700; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Solar Launchpad</div>
               <div class="podium-score" style="color: #ffd700;">${top1.average}<span class="points-text">pts</span></div>
               <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(255, 215, 0, 0.12); color: #ffd700; border-color: rgba(255, 215, 0, 0.2);">${getBadgeName(top1.average)}</div>
             </div>
           </div>
         ` : ''}
         
-        <!-- 3rd Place -->
+        <!-- 3rd Place: Asteroid Booster -->
         ${top3 ? `
           <div class="podium-column third">
-            <div class="podium-avatar">
+            <div class="podium-avatar" style="box-shadow: 0 0 15px rgba(234, 88, 12, 0.4);">
               ${getInitials(top3.name)}
               <div class="podium-badge" style="background: #ea580c;">3</div>
             </div>
             <div class="pedestal bronze" style="height: 90px;">
               <div class="pedestal-glow"></div>
               <div class="podium-name">${top3.name}</div>
+              <div style="font-size: 0.65rem; color: #ffc078; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Asteroid Booster</div>
               <div class="podium-score">${top3.average}<span class="points-text">pts</span></div>
               <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(234, 88, 12, 0.12); color: #ffc078; border-color: rgba(234, 88, 12, 0.2);">${getBadgeName(top3.average)}</div>
             </div>
@@ -185,19 +188,19 @@ function renderLeaderboard(state) {
         </td>
         <td>
           <div class="student-info">
-            <div class="student-avatar">${getInitials(student.name)}</div>
+            <div class="student-avatar" style="background: rgba(192, 132, 252, 0.1); border-color: rgba(192, 132, 252, 0.2); color: #c084fc;">${getInitials(student.name)}</div>
             <div>
               <div style="font-weight: 600;">${student.name}</div>
-              <div style="font-size: 0.75rem; color: var(--text-secondary)">Joined ${student.joinedDate}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary)">Orbit Entry ${student.joinedDate}</div>
             </div>
           </div>
         </td>
         <td>
-          <span class="badge-tag">${getBadgeName(student.average)}</span>
+          <span class="badge-tag" style="background: rgba(192, 132, 252, 0.12); color: #c084fc; border-color: rgba(192, 132, 252, 0.2);">${getBadgeName(student.average)}</span>
         </td>
         <td>
           <div style="color: var(--text-secondary); font-size: 0.9rem;">
-            ${student.completedCount} / ${student.enrolledCount} subjects completed
+            ${student.completedCount} / ${student.enrolledCount} funnels graded
           </div>
         </td>
         <td>
@@ -226,7 +229,7 @@ function renderLeaderboard(state) {
         
       let listItems = "";
       if (subjectGrades.length === 0) {
-        listItems = `<div style="padding: 1rem; text-align: center; font-size: 0.8rem; color: var(--text-muted)">No grades entered yet</div>`;
+        listItems = `<div style="padding: 1rem; text-align: center; font-size: 0.8rem; color: var(--text-muted)">No launches logged yet</div>`;
       } else {
         listItems = subjectGrades.map((g, idx) => `
           <div class="mini-board-item">
@@ -234,7 +237,7 @@ function renderLeaderboard(state) {
               <span style="color: var(--text-muted); margin-right: 0.5rem; font-weight: 700;">#${idx + 1}</span>
               ${g.name}
             </span>
-            <span class="mini-board-score">${g.score} <span style="font-size: 0.7rem; color: var(--text-secondary)">pts</span></span>
+            <span class="mini-board-score" style="color: #c084fc;">${g.score} <span style="font-size: 0.7rem; color: var(--text-secondary)">pts</span></span>
           </div>
         `).join('');
       }
@@ -243,7 +246,7 @@ function renderLeaderboard(state) {
         <div class="glass-panel" style="overflow: hidden;">
           <div class="mini-board-title">
             <span style="font-weight: 700;">${subject.name}</span>
-            <span style="font-size: 0.75rem; color: var(--text-secondary)">Leader</span>
+            <span style="font-size: 0.75rem; color: var(--text-secondary)">Orbit Leader</span>
           </div>
           <div class="mini-board-list">
             ${listItems}
@@ -258,20 +261,20 @@ function renderLeaderboard(state) {
       
       <!-- Collapsible Cohort Handbook Banner -->
       <div class="glass-panel study-hero-banner" style="margin-bottom: 2.5rem; padding: 2rem; position: relative;">
-        <div style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.08; font-size: 5.5rem; pointer-events: none; user-select: none;">🎓</div>
+        <div style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.08; font-size: 5.5rem; pointer-events: none; user-select: none;">🌌</div>
         <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
-          AI Learning Lab Tracker
+          Cosmic Marketing Growth Console
         </h2>
         <p style="color: var(--text-secondary); max-width: 850px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem;">
-          Welcome to the cohort study space! This dashboard monitors learning velocity, assignment completion, and core skill sets across advanced generative AI tools. Use this workspace to review metrics, inspect skills maps, and trace evaluations.
+          Welcome to the digital marketing cockpit! We monitor campaign reach, lead generation mechanics, and conversion workflows across advanced AI tools. Track cohort scores, inspect orbital capability grids, and view launch metrics.
         </p>
         
         <details class="handbook-accordion">
-          <summary>📖 Open Academy Handbook & Syllabus details</summary>
+          <summary>📖 Access Growth Campaigns Directory & Formula Sheet</summary>
           <div class="handbook-content">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 1.5rem;">
               <div>
-                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">📋 Active Course Syllabus</h4>
+                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">📋 Active Campaign Syllabus</h4>
                 <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem;">
                   ${state.subjects.map(sub => `
                     <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-size: 0.85rem;">
@@ -281,13 +284,12 @@ function renderLeaderboard(state) {
                 </ul>
               </div>
               <div>
-                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">🏆 Achievement Ranking Scale</h4>
-                <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem;">
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">👑 <strong>AI Sage</strong>: Average grade of 95% or higher.</li>
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">⚡ <strong>Master Promptist</strong>: Average grade of 90% to 94.9%.</li>
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🚀 <strong>Co-Pilot Pro</strong>: Average grade of 80% to 89.9%.</li>
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🗺️ <strong>AI Navigator</strong>: Average grade of 70% to 79.9%.</li>
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🌱 <strong>AI Cadet</strong>: Initial starter grade under 70%.</li>
+                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">⚛️ Cosmic Marketing Physics Formulas</h4>
+                <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.85rem; color: #c084fc; font-family: monospace;">
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🚀 <strong>ROI</strong> = (Engagement × Conversion²) ÷ Friction</li>
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">⚛️ <strong>Viral Velocity</strong> = Content Quality × Reach²</li>
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🌌 <strong>Organic Traffic</strong> = Backlinks × AI Relevance</li>
+                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🌱 <strong>Bounce Rate</strong> = Funnel Friction ÷ Interactive Value</li>
                 </ul>
               </div>
             </div>
@@ -296,21 +298,21 @@ function renderLeaderboard(state) {
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
                 <div class="step-card-num" style="background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2);">1</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Cohort Rankings</h4>
-                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Compare average marks, check leaderboard standings, and view subject-wise champions below.</p>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Launch Crew Standing</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Compare growth averages, check orbital standings, and view subject-wise top campaign leads.</p>
                 </div>
               </div>
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
                 <div class="step-card-num" style="background: rgba(127, 0, 255, 0.15); color: #c084fc; border: 1px solid rgba(127, 0, 255, 0.2);">2</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Skills Radar Map</h4>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Orbital Skills Radar</h4>
                   <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Switch to the <b>Learner Dashboard</b> above to inspect detailed capabilities maps and teacher reviews.</p>
                 </div>
               </div>
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="step-card-num" style="background: rgba(56, 239, 125, 0.1); color: #38ef7d; border: 1px solid rgba(56, 239, 125, 0.2);">3</div>
+                <div class="step-card-num" style="background: rgba(245, 159, 0, 0.1); color: #ffd700; border: 1px solid rgba(245, 159, 0, 0.2);">3</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Automatic Sync</h4>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Instant Cosmic Sync</h4>
                   <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Updates submitted in the <b>Management View</b> sync instantly to everyone's device via GitHub.</p>
                 </div>
               </div>
@@ -324,29 +326,29 @@ function renderLeaderboard(state) {
         <div class="hud-card">
           <div class="hud-icon">👥</div>
           <div class="hud-info">
-            <span class="hud-label">Active Cohort</span>
-            <span class="hud-value">${studentCount} Learners</span>
+            <span class="hud-label">Launch Crew</span>
+            <span class="hud-value">${studentCount} Hackers</span>
           </div>
         </div>
         <div class="hud-card purple">
           <div class="hud-icon">📚</div>
           <div class="hud-info">
-            <span class="hud-label">AI Syllabus</span>
-            <span class="hud-value">${subjectCount} Subjects</span>
+            <span class="hud-label">Campaign Funnels</span>
+            <span class="hud-value">${subjectCount} Syllabus</span>
           </div>
         </div>
         <div class="hud-card gold">
           <div class="hud-icon">📈</div>
           <div class="hud-info">
-            <span class="hud-label">Class Average</span>
+            <span class="hud-label">Growth Velocity</span>
             <span class="hud-value">${cohortAverage}%</span>
           </div>
         </div>
         <div class="hud-card emerald">
-          <div class="hud-icon">🎯</div>
+          <div class="hud-icon">🚀</div>
           <div class="hud-info">
-            <span class="hud-label">Target Milestone</span>
-            <span class="hud-value" style="font-size: 0.95rem; line-height: 1.4;">${upcomingDeadline}</span>
+            <span class="hud-label">Launch Target</span>
+            <span class="hud-value" style="font-size: 0.95rem; line-height: 1.4; color: #38ef7d;">${upcomingDeadline}</span>
           </div>
         </div>
       </div>
@@ -355,17 +357,17 @@ function renderLeaderboard(state) {
       
       <div class="glass-panel leaderboard-table-container">
         <div class="mini-board-title" style="border-bottom: 1px solid var(--border-color); font-weight: 700; padding: 1.25rem 1.5rem;">
-          Cohort Ranking Table
+          Active Growth Standings
         </div>
         <div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th style="width: 80px;">Rank</th>
-                <th>Learner</th>
+                <th>Growth Hacker</th>
                 <th>Achievement Badge</th>
-                <th>Coverage</th>
-                <th>Avg Score</th>
+                <th>Funnel Completion</th>
+                <th>Avg Growth Score</th>
               </tr>
             </thead>
             <tbody>
@@ -376,7 +378,7 @@ function renderLeaderboard(state) {
       </div>
       
       <h3 class="section-title" style="margin-top: 4rem; font-size: 1.5rem;">
-        ${getIconHtml('award')} Subject Leaders
+        ${getIconHtml('award')} Campaign Leaders
       </h3>
       <div class="grid-container-2">
         ${miniBoardsHtml}
@@ -591,9 +593,9 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       <div class="dashboard-controls">
         <div>
           <h2 class="section-title" style="margin-bottom: 0.25rem;">
-            ${getIconHtml('user')} Learner Performance Center
+            ${getIconHtml('user')} Growth Hacker Orbit Terminal
           </h2>
-          <p style="color: var(--text-secondary);">Visualize skills profiles, academic scores, and constructive comments.</p>
+          <p style="color: var(--text-secondary);">Visualize skills profiles, campaign metrics, and teacher logs.</p>
         </div>
         <div class="select-container">
           <select id="dashboard-student-select">
@@ -606,31 +608,31 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       <div class="grid-container-4">
         <div class="glass-panel stat-card" style="border-left: 3px solid #00f2fe; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">📈</div>
-          <span class="stat-label">Average Mark</span>
+          <span class="stat-label">Campaign ROI Average</span>
           <span class="stat-val text-gradient">${stats.average}<span class="points-text" style="font-size: 1.25rem;">%</span></span>
-          <span class="stat-desc">Across ${stats.completedCount} graded courses</span>
+          <span class="stat-desc">Across ${stats.completedCount} active campaigns</span>
         </div>
         <div class="glass-panel stat-card" style="border-left: 3px solid #ffd700; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">🏆</div>
-          <span class="stat-label">Cohort Rank</span>
+          <span class="stat-label">Orbit Rank</span>
           <span class="stat-val" style="color: #ffd700;">#${rankIndex}</span>
-          <span class="stat-desc">Out of ${state.students.length} students</span>
+          <span class="stat-desc">Out of ${state.students.length} growth hackers</span>
         </div>
         <div class="glass-panel stat-card" style="border-left: 3px solid #38ef7d; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">💪</div>
-          <span class="stat-label">Core Strength</span>
+          <span class="stat-label">Primary Funnel</span>
           <span class="stat-val" style="font-size: 1.15rem; color: #38ef7d; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem; max-width: calc(100% - 24px);">
             ${stats.strength}
           </span>
-          <span class="stat-desc">Highest scoring subject</span>
+          <span class="stat-desc">Highest performing funnel</span>
         </div>
         <div class="glass-panel stat-card" style="border-left: 3px solid #ff5858; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">🎯</div>
-          <span class="stat-label">Focus Area</span>
+          <span class="stat-label">Friction Point</span>
           <span class="stat-val" style="font-size: 1.15rem; color: #ff5858; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem; max-width: calc(100% - 24px);">
             ${stats.weakness}
           </span>
-          <span class="stat-desc">Lowest scoring subject</span>
+          <span class="stat-desc">Lowest performing funnel</span>
         </div>
       </div>
       
@@ -639,7 +641,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         <!-- Horizontal Progress Bars -->
         <div class="glass-panel chart-card" style="align-items: stretch; justify-content: flex-start;">
           <h3 class="chart-title" style="display: flex; align-items: center; gap: 0.5rem;">
-            ${getIconHtml('chart')} Skill Distribution
+            ${getIconHtml('chart')} Campaign Reach Metrics
           </h3>
           <div style="margin-top: 1rem;">
             ${barChartsHtml}
@@ -649,15 +651,15 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         <!-- SVG Capability Map -->
         <div class="glass-panel chart-card">
           <h3 class="chart-title" style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem;">
-            ${getIconHtml('badge')} AI Capabilities radar
+            ${getIconHtml('badge')} Growth Capability Radar
           </h3>
           <div class="chart-container" style="flex-direction: column; height: auto;">
             ${drawCapabilitiesRadar()}
             <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; font-size: 0.7rem; color: var(--text-secondary);">
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #00f2fe;"></span> Sage (95+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #c084fc;"></span> Pro (80+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ffd700;"></span> Navigator (70+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ff5858;"></span> Cadet (&lt;70)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #00f2fe;"></span> Quantum Sage (95+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #c084fc;"></span> Orbital Pro (80+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ffd700;"></span> Gravity Navigator (70+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ff5858;"></span> Cosmic Cadet (&lt;70)</span>
             </div>
           </div>
         </div>
@@ -666,7 +668,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       <!-- Grading Timeline -->
       <div class="glass-panel timeline-card">
         <h3 style="font-size: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-          ${getIconHtml('award')} Feedback Timeline & Evaluations
+          ${getIconHtml('award')} Campaign Logs & Written Briefs
         </h3>
         <div class="timeline-list">
           ${timelineItemsHtml}
@@ -752,9 +754,9 @@ function renderAdminPanel(state, actions) {
         <div class="admin-header">
           <div>
             <h2 class="section-title" style="margin-bottom: 0.25rem;">
-              ${getIconHtml('lock')} Cohort Management panel
+              ${getIconHtml('lock')} Growth Command Center
             </h2>
-            <p style="color: var(--text-secondary);">Add scores, update course catalog, export backup JSON, or restore database state.</p>
+            <p style="color: var(--text-secondary);">Launch growth campaign metrics, update funnels catalog, or import/export backup logs.</p>
           </div>
           <div class="admin-controls-bar">
             <button id="admin-export-btn" class="btn btn-outline">
@@ -795,23 +797,23 @@ function renderAdminPanel(state, actions) {
 
         <!-- Main Form Panel -->
         <div class="glass-panel form-panel">
-          <h3 class="form-title">📝 Evaluate Performance & Log Grade</h3>
+          <h3 class="form-title">📝 Log Campaign Metrics & Evaluate Growth</h3>
           <form id="grade-entry-form">
             <div class="form-grid">
               <div class="form-group">
-                <label for="grade-student-select">Select Learner</label>
+                <label for="grade-student-select">Select Growth Hacker</label>
                 <select id="grade-student-select" required>
                   ${studentOptionsHtml}
                 </select>
               </div>
               <div class="form-group">
-                <label for="grade-subject-select">Select Subject</label>
+                <label for="grade-subject-select">Select Campaign Funnel</label>
                 <select id="grade-subject-select" required>
                   ${subjectOptionsHtml}
                 </select>
               </div>
               <div class="form-group">
-                <label for="grade-score">Numerical Mark (0 - 100)</label>
+                <label for="grade-score">Numerical Growth Score (0 - 100)</label>
                 <input type="number" id="grade-score" min="0" max="100" placeholder="e.g. 88" required>
               </div>
               <div class="form-group">
@@ -819,8 +821,8 @@ function renderAdminPanel(state, actions) {
                 <input type="date" id="grade-date" required>
               </div>
               <div class="form-group form-group-full">
-                <label for="grade-feedback">Written Assessment / Performance Comments</label>
-                <textarea id="grade-feedback" placeholder="Provide constructive feedback about the learner's prompt structuring, workflow design, error handling, etc." required></textarea>
+                <label for="grade-feedback">Written Assessment / Campaign Performance Notes</label>
+                <textarea id="grade-feedback" placeholder="Provide constructive feedback about the hacker's prompt structuring, funnel performance, copy precision, etc." required></textarea>
               </div>
             </div>
             <div class="form-actions">
@@ -835,14 +837,14 @@ function renderAdminPanel(state, actions) {
           <div class="glass-panel list-panel">
             <div class="list-panel-header">
               <h3 style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                👥 Manage Cohort Learners (${state.students.length})
+                👥 Onboard Growth Crew (${state.students.length})
               </h3>
             </div>
             <div class="list-items">
               ${studentsListHtml}
             </div>
             <form id="add-student-form" class="add-item-form">
-              <input type="text" id="new-student-name" placeholder="Full name of student" required style="flex: 1; padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+              <input type="text" id="new-student-name" placeholder="Full name of growth hacker" required style="flex: 1; padding: 0.5rem 0.75rem; font-size: 0.85rem;">
               <button type="submit" class="btn btn-primary" style="padding: 0.5rem 0.75rem;">
                 ${getIconHtml('plus')} Add
               </button>
@@ -853,17 +855,17 @@ function renderAdminPanel(state, actions) {
           <div class="glass-panel list-panel">
             <div class="list-panel-header">
               <h3 style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                📚 Course & Subject Syllabus (${state.subjects.length})
+                📚 Campaign Funnels Catalog (${state.subjects.length})
               </h3>
             </div>
             <div class="list-items">
               ${subjectsListHtml}
             </div>
             <form id="add-subject-form" class="add-item-form" style="flex-direction: column; gap: 0.5rem;">
-              <input type="text" id="new-subject-name" placeholder="Subject Name (e.g. Claude Projects)" required style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
-              <input type="text" id="new-subject-desc" placeholder="Brief subject details" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+              <input type="text" id="new-subject-name" placeholder="Campaign Funnel Name (e.g. Claude Projects)" required style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+              <input type="text" id="new-subject-desc" placeholder="Brief campaign details" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
               <button type="submit" class="btn btn-primary" style="padding: 0.5rem 0.75rem; align-self: flex-end;">
-                ${getIconHtml('plus')} Add Subject
+                ${getIconHtml('plus')} Add Funnel
               </button>
             </form>
           </div>

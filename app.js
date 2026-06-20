@@ -43,6 +43,20 @@ function loadState() {
       state.students = parsed.students || [];
       state.subjects = parsed.subjects || [];
       state.grades = parsed.grades || [];
+      
+      // Auto-migrate: check if there are new subjects in seedData.js that are missing from localStorage
+      let hasMigration = false;
+      DEFAULT_SUBJECTS.forEach(defSub => {
+        if (!state.subjects.some(s => s.id === defSub.id)) {
+          state.subjects.push(defSub);
+          const defGrades = DEFAULT_GRADES.filter(g => g.subjectId === defSub.id);
+          state.grades.push(...defGrades);
+          hasMigration = true;
+        }
+      });
+      if (hasMigration) {
+        saveState();
+      }
     } else {
       // Seed default data
       state.students = [...DEFAULT_STUDENTS];

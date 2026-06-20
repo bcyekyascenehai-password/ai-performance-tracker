@@ -30,6 +30,18 @@ const DEFAULT_SUBJECTS = [
     name: "AI Mastermind Session",
     description: "Attendance and active participation in the AI Mastermind Session (31 May 2026).",
     deadline: "Completed"
+  },
+  {
+    id: "sub4",
+    name: "Google Flow - Shots Explorer, Scene Explorer, Simple Sketch",
+    description: "Creating assets using Google Flow tools (Shots Explorer, Scene Explorer, Simple Sketch).",
+    deadline: "2026-06-12"
+  },
+  {
+    id: "sub5",
+    name: "Google NotebookLM",
+    description: "Research, audio generation, and notes compilation using Google NotebookLM.",
+    deadline: "2026-06-18"
   }
 ];
 
@@ -163,5 +175,119 @@ const DEFAULT_GRADES = [
     score: 100,
     feedback: "Attended the AI Mastermind Session",
     date: "2026-05-31"
+  },
+  // Google Flow - Shots Explorer, Scene Explorer, Simple Sketch (sub4) evaluations
+  {
+    studentId: "s7",
+    subjectId: "sub4",
+    score: 100,
+    feedback: "Top Performer: Fully completed all 3 samples with perfect brand alignment. (Samples Shared: 3/3, Brand Alignment: ⭐⭐⭐⭐⭐)",
+    date: "2026-06-12"
+  },
+  {
+    studentId: "s5",
+    subjectId: "sub4",
+    score: 100,
+    feedback: "Top Performer: Fully completed all 3 samples with perfect brand alignment. (Samples Shared: 3/3, Brand Alignment: ⭐⭐⭐⭐⭐)",
+    date: "2026-06-12"
+  },
+  {
+    studentId: "s1",
+    subjectId: "sub4",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-12"
+  },
+  {
+    studentId: "s2",
+    subjectId: "sub4",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-12"
+  },
+  {
+    studentId: "s3",
+    subjectId: "sub4",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-12"
+  },
+  {
+    studentId: "s4",
+    subjectId: "sub4",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-12"
+  },
+  {
+    studentId: "s8",
+    subjectId: "sub4",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-12"
+  },
+  {
+    studentId: "s6",
+    subjectId: "sub4",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-12"
+  },
+  // Google NotebookLM (sub5) evaluations
+  {
+    studentId: "s5",
+    subjectId: "sub5",
+    score: 100,
+    feedback: "Top Performer: Completed all samples with excellent quality. (Samples Shared: 3/3, Brand Alignment: ⭐⭐⭐⭐⭐)",
+    date: "2026-06-18"
+  },
+  {
+    studentId: "s8",
+    subjectId: "sub5",
+    score: 70,
+    feedback: "Shared 2 samples, needs prompt enhancement. (Samples Shared: 2/3, Brand Alignment: ⭐⭐⭐)",
+    date: "2026-06-18"
+  },
+  {
+    studentId: "s6",
+    subjectId: "sub5",
+    score: 80,
+    feedback: "All 3 shared, but needs prompt enhancement. (Samples Shared: 3/3, Brand Alignment: ⭐⭐⭐)",
+    date: "2026-06-18"
+  },
+  {
+    studentId: "s1",
+    subjectId: "sub5",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-18"
+  },
+  {
+    studentId: "s2",
+    subjectId: "sub5",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-18"
+  },
+  {
+    studentId: "s3",
+    subjectId: "sub5",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-18"
+  },
+  {
+    studentId: "s4",
+    subjectId: "sub5",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-18"
+  },
+  {
+    studentId: "s7",
+    subjectId: "sub5",
+    score: 0,
+    feedback: "❌ No Submission (Deadline Missed)",
+    date: "2026-06-18"
   }
 ];

@@ -1,38 +1,37 @@
 /* Core Design System & Styling - AI Tools Performance Tracker */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Colors */
-  --bg-primary: #080b11;
-  --bg-secondary: #0f1420;
-  --bg-card: rgba(21, 29, 47, 0.65);
-  --bg-card-hover: rgba(30, 41, 67, 0.8);
-  --border-color: rgba(255, 255, 255, 0.07);
-  --border-color-glow: rgba(0, 242, 254, 0.3);
+  /* Colors - Blackboard Laboratory Theme */
+  --bg-primary: #101c17; /* Deep green chalkboard */
+  --bg-secondary: #0d1612;
+  --bg-card: rgba(16, 28, 23, 0.65);
+  --bg-card-hover: rgba(22, 38, 31, 0.8);
+  --border-color: rgba(255, 255, 255, 0.15);
   
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-secondary: #cbd5e1;
+  --text-muted: #86efac; /* Soft green chalk accent */
   
   /* Gradients */
-  --grad-primary: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-  --grad-secondary: linear-gradient(135deg, #b92b27 0%, #1565c0 100%);
-  --grad-accent: linear-gradient(135deg, #7F00FF 0%, #FF007F 100%);
-  --grad-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-  --grad-warning: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+  --grad-primary: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%); /* Mint chalk gradient */
+  --grad-secondary: linear-gradient(135deg, #fde047 0%, #ca8a04 100%); /* Yellow chalk */
+  --grad-accent: linear-gradient(135deg, #c084fc 0%, #818cf8 100%); /* Purple/blue chalk */
+  --grad-success: linear-gradient(135deg, #6ee7b7 0%, #059669 100%);
+  --grad-warning: linear-gradient(135deg, #fda4af 0%, #f43f5e 100%);
   --grad-dark: linear-gradient(180deg, #0f172a 0%, #020617 100%);
-  --grad-card-glow: radial-gradient(circle at top right, rgba(0, 242, 254, 0.12), transparent 50%);
+  --grad-card-glow: radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 50%);
   
   /* Box Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 20px rgba(0, 242, 254, 0.25);
-  --shadow-glow-purple: 0 0 20px rgba(127, 0, 255, 0.25);
+  --shadow-glow: 0 0 15px rgba(255, 255, 255, 0.08);
   
   /* Fonts */
   --font-display: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
+  --font-chalk: 'Architects Daughter', cursive;
   
   /* Layout settings */
   --border-radius-sm: 8px;
@@ -49,13 +48,13 @@
 
 body {
   font-family: var(--font-body);
-  background-color: transparent;
-  /* Glowing Cosmic Nebulae Background */
+  background-color: var(--bg-primary);
+  /* Deep green slate chalkboard texture */
   background-image: 
-    radial-gradient(at 0% 0%, rgba(127, 0, 255, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.1) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(245, 159, 0, 0.04) 0px, transparent 60%);
-  background-size: 100% 100%, 100% 100%, 100% 100%;
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 4px;
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
@@ -63,15 +62,19 @@ body {
   overflow-x: hidden;
 }
 
-#cosmic-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  pointer-events: none;
-  background-color: #020205;
+/* Chalk Writing Utility */
+.chalk-text {
+  font-family: var(--font-chalk) !important;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.04em;
+}
+
+.chalk-formula {
+  font-family: var(--font-chalk) !important;
+  color: #fde047; /* Yellow chalk */
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
 }
 
 /* Typography */
@@ -95,12 +98,10 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-/* Glassmorphism Classes */
+/* Chalkboard Sketch Card Panels */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
+  border: 2px dashed rgba(255, 255, 255, 0.15); /* Double-dashed chalk outline */
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-md);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -108,40 +109,27 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-.glass-panel::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--grad-card-glow);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 0;
-}
-
 .glass-panel:hover {
   background: var(--bg-card-hover);
-  border-color: var(--border-color-glow);
-  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.4); /* Bright chalk line */
+  transform: translateY(-4px) rotate(0.1deg);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
-/* Premium Study Hero Banner styles */
+/* Premium Chalkboard Hero Banner styles */
 .study-hero-banner {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(21, 29, 47, 0.6) 100%);
-  border-left: 4px solid #00f2fe !important;
-  box-shadow: var(--shadow-md), 0 0 25px rgba(0, 242, 254, 0.08);
+  background: rgba(12, 22, 18, 0.85) !important;
+  border: 2px dashed #34d399 !important; /* Mint chalk outline */
+  box-shadow: var(--shadow-md);
 }
 
 .study-hero-banner:hover {
-  border-color: #00f2fe;
-  box-shadow: var(--shadow-lg), 0 0 35px rgba(0, 242, 254, 0.15), var(--shadow-glow);
+  border-color: #059669 !important;
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(52, 211, 153, 0.15);
   transform: translateY(-2px);
 }
 
-/* Premium Glassmorphic Pedestal */
+/* Hand-drawn Pedestals */
 .pedestal {
   position: relative;
   width: 100%;
@@ -151,72 +139,40 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: flex-end;
   padding: 1.5rem 1rem;
-  background: rgba(21, 29, 47, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(16, 28, 23, 0.5);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
   border-bottom: none;
-  box-shadow: inset 0 20px 30px -10px rgba(255, 255, 255, 0.02);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
 }
 
-.pedestal::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  border-radius: 3px 3px 0 0;
+.pedestal.gold {
+  border-color: rgba(253, 224, 71, 0.4);
+  background: rgba(253, 224, 71, 0.03);
 }
 
-.pedestal.gold::before {
-  background: linear-gradient(90deg, #ffe066, #f59f00, #ffe066);
-  box-shadow: 0 0 15px #f59f00;
+.pedestal.silver {
+  border-color: rgba(209, 213, 219, 0.4);
+  background: rgba(209, 213, 219, 0.03);
 }
 
-.pedestal.silver::before {
-  background: linear-gradient(90deg, #ffffff, #a8a29e, #ffffff);
-  box-shadow: 0 0 15px #a8a29e;
+.pedestal.bronze {
+  border-color: rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.03);
 }
-
-.pedestal.bronze::before {
-  background: linear-gradient(90deg, #fed7aa, #ea580c, #fed7aa);
-  box-shadow: 0 0 15px #ea580c;
-}
-
-.pedestal-glow {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 50px;
-  filter: blur(25px);
-  opacity: 0.15;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.pedestal.gold .pedestal-glow { background: rgba(245, 159, 0, 0.4); }
-.pedestal.silver .pedestal-glow { background: rgba(168, 162, 158, 0.4); }
-.pedestal.bronze .pedestal-glow { background: rgba(234, 88, 12, 0.4); }
 
 .pedestal:hover {
-  transform: translateY(-8px);
-  background: rgba(30, 41, 59, 0.6);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 
-    0 20px 40px -15px rgba(0, 0, 0, 0.6),
-    inset 0 20px 30px -10px rgba(255, 255, 255, 0.05);
+  transform: translateY(-6px);
+  background: rgba(22, 38, 31, 0.7);
 }
 
-.pedestal:hover .pedestal-glow {
-  opacity: 0.3;
-}
+.pedestal.gold:hover { border-color: #fde047; box-shadow: 0 0 15px rgba(253, 224, 71, 0.15); }
+.pedestal.silver:hover { border-color: #e5e7eb; box-shadow: 0 0 15px rgba(229, 231, 235, 0.15); }
+.pedestal.bronze:hover { border-color: #fb923c; box-shadow: 0 0 15px rgba(251, 146, 60, 0.15); }
 
 /* Premium Collapsible Details/Summary */
 details.handbook-accordion {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid var(--border-color);
+  background: rgba(10, 18, 14, 0.4);
+  border: 2px dashed rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   margin-top: 1rem;
   transition: all 0.3s ease;
@@ -243,7 +199,7 @@ details.handbook-accordion summary::after {
   content: '▼';
   font-size: 0.7rem;
   margin-left: auto;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.5);
   transition: transform 0.2s ease;
 }
 
@@ -252,14 +208,14 @@ details.handbook-accordion[open] summary::after {
 }
 
 details.handbook-accordion[open] {
-  background: rgba(15, 23, 42, 0.8);
-  border-color: rgba(0, 242, 254, 0.2);
-  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.05);
+  background: rgba(10, 18, 14, 0.75);
+  border-color: rgba(52, 211, 153, 0.4);
+  box-shadow: 0 4px 20px rgba(52, 211, 153, 0.05);
 }
 
 .handbook-content {
   padding: 1.25rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px dashed var(--border-color);
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
@@ -273,8 +229,8 @@ details.handbook-accordion[open] {
 }
 
 .hud-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid var(--border-color);
+  background: rgba(16, 28, 23, 0.7);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   display: flex;
@@ -284,8 +240,8 @@ details.handbook-accordion[open] {
 }
 
 .hud-card:hover {
-  background: rgba(30, 41, 67, 0.6);
-  border-color: rgba(0, 242, 254, 0.2);
+  background: rgba(22, 38, 31, 0.85);
+  border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
 }
 
@@ -293,9 +249,9 @@ details.handbook-accordion[open] {
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  background: rgba(0, 242, 254, 0.08);
-  border: 1px solid rgba(0, 242, 254, 0.15);
-  color: #00f2fe;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px dashed rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -304,21 +260,15 @@ details.handbook-accordion[open] {
 }
 
 .hud-card.purple .hud-icon {
-  background: rgba(127, 0, 255, 0.1);
-  border-color: rgba(127, 0, 255, 0.2);
-  color: #c084fc;
+  color: #c084fc !important;
 }
 
 .hud-card.emerald .hud-icon {
-  background: rgba(56, 239, 125, 0.08);
-  border-color: rgba(56, 239, 125, 0.2);
-  color: #38ef7d;
+  color: #34d399 !important;
 }
 
 .hud-card.gold .hud-icon {
-  background: rgba(255, 215, 0, 0.08);
-  border-color: rgba(255, 215, 0, 0.2);
-  color: #ffd700;
+  color: #fde047 !important;
 }
 
 .hud-info {
@@ -328,7 +278,7 @@ details.handbook-accordion[open] {
 
 .hud-label {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: #86efac;
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -343,17 +293,17 @@ details.handbook-accordion[open] {
 
 /* Sticky notes for Evaluations feedback */
 .sticky-note {
-  background: rgba(21, 29, 47, 0.55);
-  border: 1px solid var(--border-color);
+  background: rgba(16, 28, 23, 0.45);
+  border: 2px dashed rgba(255, 255, 255, 0.12);
   padding: 1.25rem;
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
 .sticky-note::before {
-  content: '🖋️';
+  content: '✏️' !important;
   position: absolute;
   right: 1.25rem;
   top: 1.25rem;
@@ -362,9 +312,9 @@ details.handbook-accordion[open] {
 }
 
 .sticky-note:hover {
-  background: rgba(30, 41, 67, 0.7);
-  border-color: rgba(0, 242, 254, 0.18);
-  transform: rotate(0.5deg) scale(1.005);
+  background: rgba(22, 38, 31, 0.6);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(-0.5deg) scale(1.002);
 }
 
 .hero-steps-grid {
@@ -761,9 +711,9 @@ tr:nth-child(3) .rank-badge {
 }
 
 .badge-tag {
-  background: rgba(0, 242, 254, 0.12);
-  color: #00f2fe;
-  border: 1px solid rgba(0, 242, 254, 0.2);
+  background: rgba(134, 239, 172, 0.08);
+  color: #86efac;
+  border: 1px dashed rgba(134, 239, 172, 0.35);
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -958,15 +908,15 @@ select:hover, select:focus {
 }
 
 .radar-poly-fill {
-  fill: rgba(0, 242, 254, 0.15);
-  stroke: #00f2fe;
+  fill: rgba(134, 239, 172, 0.08);
+  stroke: #86efac;
   stroke-width: 2;
-  filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.4));
+  stroke-dasharray: 4,2;
 }
 
 .radar-poly-point {
-  fill: #00f2fe;
-  stroke: #fff;
+  fill: #86efac;
+  stroke: #fde047;
   stroke-width: 1.5;
 }
 

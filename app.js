@@ -16,12 +16,16 @@ async function fetchRemoteData() {
   const owner = 'bcyekyascenehai-password';
   const repo = 'ai-performance-tracker';
   const path = 'data.json';
-  const remoteUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=${Date.now()}`;
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
   
   try {
-    const res = await fetch(remoteUrl);
+    // Try to fetch via GitHub API first for real-time bypass of CDN cache
+    const res = await fetch(apiUrl);
     if (res.status === 200) {
-      const data = await res.json();
+      const fileData = await res.json();
+      // Decode base64 content safely handles UTF-8
+      const decodedContent = decodeURIComponent(escape(atob(fileData.content.replace(/\s/g, ''))));
+      const data = JSON.parse(decodedContent);
       state.students = data.students || [];
       state.subjects = data.subjects || [];
       state.grades = data.grades || [];
@@ -32,11 +36,31 @@ async function fetchRemoteData() {
         subjects: state.subjects,
         grades: state.grades
       }));
-      console.log("Database successfully synced with GitHub raw content.");
+      console.log("Database successfully synced with GitHub REST API.");
       return true;
     }
   } catch (e) {
-    console.warn("Failed to fetch remote data, using local fallback", e);
+    console.warn("Failed to fetch remote data via API, trying raw URL fallback", e);
+    // Fallback to raw raw.githubusercontent.com URL
+    try {
+      const remoteUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=${Date.now()}`;
+      const res = await fetch(remoteUrl);
+      if (res.status === 200) {
+        const data = await res.json();
+        state.students = data.students || [];
+        state.subjects = data.subjects || [];
+        state.grades = data.grades || [];
+        localStorage.setItem(STATE_KEY, JSON.stringify({
+          students: state.students,
+          subjects: state.subjects,
+          grades: state.grades
+        }));
+        console.log("Database successfully synced with GitHub raw fallback.");
+        return true;
+      }
+    } catch (fallbackError) {
+      console.error("Both API and raw fallback failed", fallbackError);
+    }
   }
   return false;
 }
@@ -98,171 +122,8 @@ async function syncToGitHub(updatedData) {
   }
 }
 
-// --- Interactive Cosmic Canvas Particle Engine ---
-function initCosmicParticles() {
-  const canvas = document.getElementById('cosmic-canvas');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  let mouse = { x: null, y: null, active: false };
-  let bangTriggered = false;
-  
-  // Particle Class
-  class Particle {
-    constructor(x, y, isBang = false) {
-      this.x = x;
-      this.y = y;
-      
-      // If part of the initial Big Bang, eject outwards rapidly!
-      if (isBang) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 8 + 4; // Radial velocity
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-      } else {
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
-      }
-      
-      this.radius = Math.random() * 2 + 0.5;
-      
-      // Cosmic colors: cyan, purple, orange, neon pink, star white
-      const colors = ['#00f2fe', '#c084fc', '#f59f00', '#f857a6', '#ffffff'];
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.alpha = Math.random() * 0.5 + 0.5;
-      this.friction = 0.98; // slowing down bang velocity
-    }
-    
-    update() {
-      this.vx *= this.friction;
-      this.vy *= this.friction;
-      
-      this.x += this.vx;
-      this.y += this.vy;
-      
-      // Micro drift
-      this.vx += (Math.random() - 0.5) * 0.05;
-      this.vy += (Math.random() - 0.5) * 0.05;
-      
-      // Cursor gravity interaction
-      if (mouse.active && mouse.x !== null && mouse.y !== null) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          const force = (150 - dist) / 1800;
-          this.vx += (dx / dist) * force;
-          this.vy += (dy / dist) * force;
-        }
-      }
-      
-      const speedLimit = 3;
-      const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-      if (speed > speedLimit) {
-        this.vx = (this.vx / speed) * speedLimit;
-        this.vy = (this.vy / speed) * speedLimit;
-      }
-      
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-    }
-    
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = this.alpha;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.shadowBlur = this.radius * 3;
-      ctx.shadowColor = this.color;
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-  
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    if (!bangTriggered && canvas.width > 0) {
-      triggerBigBang();
-      bangTriggered = true;
-    }
-  }
-  
-  function triggerBigBang() {
-    particles = [];
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    for (let i = 0; i < 180; i++) {
-      particles.push(new Particle(centerX, centerY, true));
-    }
-  }
-  
-  // Expose triggers
-  window.triggerStarburst = function(x, y) {
-    const targetX = x || (Math.random() * canvas.width);
-    const targetY = y || (Math.random() * canvas.height);
-    for (let i = 0; i < 35; i++) {
-      particles.push(new Particle(targetX, targetY, true));
-    }
-    if (particles.length > 300) {
-      particles = particles.slice(particles.length - 250);
-    }
-  };
-  
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    mouse.active = true;
-  });
-  
-  window.addEventListener('mouseleave', () => {
-    mouse.active = false;
-  });
-  
-  window.addEventListener('click', (e) => {
-    window.triggerStarburst(e.clientX, e.clientY);
-  });
-  
-  window.addEventListener('resize', resize);
-  resize();
-  
-  function loop() {
-    ctx.fillStyle = 'rgba(2, 2, 5, 0.15)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Faint connection lines representing marketing constellation networks
-    ctx.strokeStyle = 'rgba(192, 132, 252, 0.04)';
-    ctx.lineWidth = 0.5;
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-    
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-    
-    requestAnimationFrame(loop);
-  }
-  loop();
-}
-
 // --- Initialization ---
 async function init() {
-  initCosmicParticles();
   loadState();
   render();
   

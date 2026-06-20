@@ -89,13 +89,13 @@ function renderLeaderboard(state) {
   // Custom helper for initials
   const getInitials = (name) => name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
-  // Cosmic marketing badges
+  // Blackboard Growth Badges
   const getBadgeName = (avg) => {
-    if (avg >= 95) return "Quantum Sage ⚛️";
-    if (avg >= 90) return "Cosmic Promptist ☄️";
-    if (avg >= 80) return "Orbital Pro 🚀";
-    if (avg >= 70) return "Gravity Navigator 🗺️";
-    return "Cosmic Cadet 🌌";
+    if (avg >= 95) return "Principal Physicist ⚛️";
+    if (avg >= 90) return "Growth Alchemist 🧪";
+    if (avg >= 80) return "Funnel Chemist 📐";
+    if (avg >= 70) return "Hypothesis Tester 🔬";
+    return "Lab Apprentice 🥼";
   };
   
   // Calculate Cohort HUD Stats
@@ -107,7 +107,7 @@ function renderLeaderboard(state) {
     : 0;
     
   // Find next upcoming deadline
-  let upcomingDeadline = "Orbit Stabilized";
+  let upcomingDeadline = "Lab Inactive";
   const now = new Date();
   const futureDeadlines = state.subjects
     .filter(s => s.deadline && s.deadline !== "Completed" && s.deadline !== "No active deadline")
@@ -117,61 +117,58 @@ function renderLeaderboard(state) {
     .filter(d => d.date >= now)
     .sort((a, b) => a.date - b.date);
   if (futureDeadlines.length > 0) {
-    upcomingDeadline = `T-Minus ${futureDeadlines[0].raw}`;
+    upcomingDeadline = `Due: ${futureDeadlines[0].raw}`;
   }
 
-  // Render solar pedestals
+  // Render chalkboard pedestals
   let podiumHtml = "";
   if (top1 || top2 || top3) {
     podiumHtml = `
       <div class="podium-container" style="align-items: flex-end;">
-        <!-- 2nd Place: Nebula Launcher -->
+        <!-- 2nd Place: Funnel Chemist -->
         ${top2 ? `
           <div class="podium-column second">
-            <div class="podium-avatar" style="box-shadow: 0 0 15px rgba(168, 162, 158, 0.4);">
+            <div class="podium-avatar" style="border: 2px dashed #cbd5e1;">
               ${getInitials(top2.name)}
-              <div class="podium-badge" style="background: #a8a29e;">2</div>
+              <div class="podium-badge" style="background: #cbd5e1; border: 1px dashed #475569;">2</div>
             </div>
             <div class="pedestal silver" style="height: 120px;">
-              <div class="pedestal-glow"></div>
               <div class="podium-name">${top2.name}</div>
-              <div style="font-size: 0.65rem; color: #a8a29e; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Nebula Launcher</div>
-              <div class="podium-score">${top2.average}<span class="points-text">pts</span></div>
-              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem;">${getBadgeName(top2.average)}</div>
+              <div class="chalk-text" style="font-size: 0.7rem; color: #cbd5e1; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Funnel Chemist</div>
+              <div class="podium-score chalk-formula" style="color: #cbd5e1;">${top2.average} <span style="font-size: 0.75rem;">pts</span></div>
+              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; border-color: rgba(255,255,255,0.2);">${getBadgeName(top2.average)}</div>
             </div>
           </div>
         ` : ''}
         
-        <!-- 1st Place: Solar Launchpad -->
+        <!-- 1st Place: Lead Growth Alchemist -->
         ${top1 ? `
           <div class="podium-column first">
-            <div class="podium-avatar" style="box-shadow: 0 0 25px rgba(245, 159, 0, 0.6); border-color: #ffd700;">
+            <div class="podium-avatar" style="border: 2px dashed #fde047; box-shadow: 0 0 15px rgba(253, 224, 71, 0.2);">
               ${getInitials(top1.name)}
-              <div class="podium-badge" style="background: #f59f00;">1</div>
+              <div class="podium-badge" style="background: #fde047; border: 1px dashed #854d0e;">1</div>
             </div>
             <div class="pedestal gold" style="height: 160px;">
-              <div class="pedestal-glow"></div>
               <div class="podium-name" style="font-weight: 700;">${top1.name}</div>
-              <div style="font-size: 0.65rem; color: #ffd700; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Solar Launchpad</div>
-              <div class="podium-score" style="color: #ffd700;">${top1.average}<span class="points-text">pts</span></div>
-              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(255, 215, 0, 0.12); color: #ffd700; border-color: rgba(255, 215, 0, 0.2);">${getBadgeName(top1.average)}</div>
+              <div class="chalk-text" style="font-size: 0.7rem; color: #fde047; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Growth Alchemist</div>
+              <div class="podium-score chalk-formula" style="color: #fde047; font-size: 1.35rem;">${top1.average} <span style="font-size: 0.75rem;">pts</span></div>
+              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(253, 224, 71, 0.08); color: #fde047; border-color: rgba(253, 224, 71, 0.2);">${getBadgeName(top1.average)}</div>
             </div>
           </div>
         ` : ''}
         
-        <!-- 3rd Place: Asteroid Booster -->
+        <!-- 3rd Place: Lab Technician -->
         ${top3 ? `
           <div class="podium-column third">
-            <div class="podium-avatar" style="box-shadow: 0 0 15px rgba(234, 88, 12, 0.4);">
+            <div class="podium-avatar" style="border: 2px dashed #fb923c;">
               ${getInitials(top3.name)}
-              <div class="podium-badge" style="background: #ea580c;">3</div>
+              <div class="podium-badge" style="background: #fb923c; border: 1px dashed #7c2d12;">3</div>
             </div>
             <div class="pedestal bronze" style="height: 90px;">
-              <div class="pedestal-glow"></div>
               <div class="podium-name">${top3.name}</div>
-              <div style="font-size: 0.65rem; color: #ffc078; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Asteroid Booster</div>
-              <div class="podium-score">${top3.average}<span class="points-text">pts</span></div>
-              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(234, 88, 12, 0.12); color: #ffc078; border-color: rgba(234, 88, 12, 0.2);">${getBadgeName(top3.average)}</div>
+              <div class="chalk-text" style="font-size: 0.7rem; color: #fb923c; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Lab Technician</div>
+              <div class="podium-score chalk-formula" style="color: #fb923c;">${top3.average} <span style="font-size: 0.75rem;">pts</span></div>
+              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(251, 146, 60, 0.08); color: #fb923c; border-color: rgba(251, 146, 60, 0.2);">${getBadgeName(top3.average)}</div>
             </div>
           </div>
         ` : ''}
@@ -184,27 +181,27 @@ function renderLeaderboard(state) {
     return `
       <tr class="leaderboard-row">
         <td>
-          <div class="rank-badge">${index + 1}</div>
+          <div class="rank-badge" style="border: 1px dashed rgba(255,255,255,0.2); background: transparent;">${index + 1}</div>
         </td>
         <td>
           <div class="student-info">
-            <div class="student-avatar" style="background: rgba(192, 132, 252, 0.1); border-color: rgba(192, 132, 252, 0.2); color: #c084fc;">${getInitials(student.name)}</div>
+            <div class="student-avatar" style="background: rgba(134, 239, 172, 0.05); border: 1px dashed rgba(134, 239, 172, 0.3); color: #86efac;">${getInitials(student.name)}</div>
             <div>
               <div style="font-weight: 600;">${student.name}</div>
-              <div style="font-size: 0.75rem; color: var(--text-secondary)">Orbit Entry ${student.joinedDate}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary)">Lab Member since ${student.joinedDate}</div>
             </div>
           </div>
         </td>
         <td>
-          <span class="badge-tag" style="background: rgba(192, 132, 252, 0.12); color: #c084fc; border-color: rgba(192, 132, 252, 0.2);">${getBadgeName(student.average)}</span>
+          <span class="badge-tag" style="background: rgba(134, 239, 172, 0.08); color: #86efac; border: 1px dashed rgba(134, 239, 172, 0.3);">${getBadgeName(student.average)}</span>
         </td>
         <td>
           <div style="color: var(--text-secondary); font-size: 0.9rem;">
-            ${student.completedCount} / ${student.enrolledCount} funnels graded
+            ${student.completedCount} / ${student.enrolledCount} campaigns graded
           </div>
         </td>
         <td>
-          <div class="score-badge text-gradient">${student.average} <span class="points-text">pts</span></div>
+          <div class="score-badge chalk-formula" style="color: #fde047; font-size: 1.1rem;">${student.average} <span class="points-text" style="color: rgba(255,255,255,0.5);">pts</span></div>
         </td>
       </tr>
     `;
@@ -229,24 +226,24 @@ function renderLeaderboard(state) {
         
       let listItems = "";
       if (subjectGrades.length === 0) {
-        listItems = `<div style="padding: 1rem; text-align: center; font-size: 0.8rem; color: var(--text-muted)">No launches logged yet</div>`;
+        listItems = `<div class="chalk-text" style="padding: 1rem; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.4)">No campaigns graded yet</div>`;
       } else {
         listItems = subjectGrades.map((g, idx) => `
-          <div class="mini-board-item">
+          <div class="mini-board-item" style="border-bottom: 1px dashed rgba(255,255,255,0.05);">
             <span class="mini-board-name">
-              <span style="color: var(--text-muted); margin-right: 0.5rem; font-weight: 700;">#${idx + 1}</span>
+              <span style="color: #86efac; margin-right: 0.5rem; font-weight: 700;">#${idx + 1}</span>
               ${g.name}
             </span>
-            <span class="mini-board-score" style="color: #c084fc;">${g.score} <span style="font-size: 0.7rem; color: var(--text-secondary)">pts</span></span>
+            <span class="mini-board-score chalk-formula" style="color: #fde047;">${g.score} <span style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">pts</span></span>
           </div>
         `).join('');
       }
       
       return `
-        <div class="glass-panel" style="overflow: hidden;">
-          <div class="mini-board-title">
+        <div class="glass-panel" style="overflow: hidden; border: 2px dashed rgba(255, 255, 255, 0.12);">
+          <div class="mini-board-title" style="border-bottom: 1px dashed rgba(255,255,255,0.12); background: rgba(0,0,0,0.15);">
             <span style="font-weight: 700;">${subject.name}</span>
-            <span style="font-size: 0.75rem; color: var(--text-secondary)">Orbit Leader</span>
+            <span class="chalk-text" style="font-size: 0.75rem; color: #86efac;">Top Researcher</span>
           </div>
           <div class="mini-board-list">
             ${listItems}
@@ -261,12 +258,25 @@ function renderLeaderboard(state) {
       
       <!-- Collapsible Cohort Handbook Banner -->
       <div class="glass-panel study-hero-banner" style="margin-bottom: 2.5rem; padding: 2rem; position: relative;">
-        <div style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.08; font-size: 5.5rem; pointer-events: none; user-select: none;">🌌</div>
+        <!-- Sketchy Chalkboard Doodle SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="160" height="160" style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.2; pointer-events: none; user-select: none;">
+          <path d="M 20,30 L 180,30 L 120,120 L 120,170 L 80,170 L 80,120 Z" fill="none" stroke="#86efac" stroke-width="2" stroke-dasharray="6,4" stroke-linecap="round" />
+          <line x1="35" y1="52" x2="165" y2="52" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4,4" />
+          <line x1="50" y1="80" x2="150" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4,4" />
+          <line x1="68" y1="108" x2="132" y2="108" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4,4" />
+          <text x="100" y="45" fill="#fff" font-family="'Architects Daughter', cursive" font-size="10" text-anchor="middle">TRAFFIC</text>
+          <text x="100" y="73" fill="#fde047" font-family="'Architects Daughter', cursive" font-size="10" text-anchor="middle">LEADS</text>
+          <text x="100" y="101" fill="#86efac" font-family="'Architects Daughter', cursive" font-size="10" text-anchor="middle">CONV</text>
+          <text x="100" y="148" fill="#fb923c" font-family="'Architects Daughter', cursive" font-size="11" text-anchor="middle">$$ ROI $$</text>
+          <path d="M 10,180 Q 70,175 140,110 T 195,25" fill="none" stroke="#fde047" stroke-width="2" stroke-dasharray="5,5" />
+          <path d="M 185,25 L 195,25 L 195,35" fill="none" stroke="#fde047" stroke-width="2" />
+        </svg>
+
         <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
-          Cosmic Marketing Growth Console
+          Growth Hacker's Blackboard Lab
         </h2>
-        <p style="color: var(--text-secondary); max-width: 850px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem;">
-          Welcome to the digital marketing cockpit! We monitor campaign reach, lead generation mechanics, and conversion workflows across advanced AI tools. Track cohort scores, inspect orbital capability grids, and view launch metrics.
+        <p style="color: var(--text-secondary); max-width: 800px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem;">
+          Welcome to the chalkboard growth lab! We analyze cohort data, campaign mechanics, and conversion funnels. Write your marketing equations, monitor student research, and evaluate conversion rates.
         </p>
         
         <details class="handbook-accordion">
@@ -277,42 +287,50 @@ function renderLeaderboard(state) {
                 <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">📋 Active Campaign Syllabus</h4>
                 <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem;">
                   ${state.subjects.map(sub => `
-                    <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-size: 0.85rem;">
-                      <strong style="color: #00f2fe;">${sub.name}</strong> - <span style="color: var(--text-secondary);">${sub.description || 'No description.'}</span>
+                    <li style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.85rem;">
+                      <strong style="color: #86efac;">${sub.name}</strong> - <span style="color: var(--text-secondary);">${sub.description || 'No description.'}</span>
                     </li>
                   `).join('')}
                 </ul>
               </div>
               <div>
-                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">⚛️ Cosmic Marketing Physics Formulas</h4>
-                <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.85rem; color: #c084fc; font-family: monospace;">
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🚀 <strong>ROI</strong> = (Engagement × Conversion²) ÷ Friction</li>
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">⚛️ <strong>Viral Velocity</strong> = Content Quality × Reach²</li>
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🌌 <strong>Organic Traffic</strong> = Backlinks × AI Relevance</li>
-                  <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">🌱 <strong>Bounce Rate</strong> = Funnel Friction ÷ Interactive Value</li>
+                <h4 class="chalk-text" style="color: #fff; margin-bottom: 1rem; font-size: 1.15rem; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.5rem;">⚛️ Growth Marketing Physics Formulas</h4>
+                <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.95rem;">
+                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
+                    ROI = &frac12; (Engagement &times; Conversion&sup2;) &divide; Friction
+                  </li>
+                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
+                    Velocity<sub>viral</sub> = Content &times; Reach&sup2; &times; (1 - Friction)
+                  </li>
+                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
+                    Traffic<sub>organic</sub> = &int; (Backlinks &times; Relevance<sub>AI</sub>) dt
+                  </li>
+                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
+                    Bounce = &delta; &times; (Friction &divide; Value<sub>interactive</sub>)
+                  </li>
                 </ul>
               </div>
             </div>
             
-            <div class="hero-steps-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+            <div class="hero-steps-grid" style="border-top: 1px dashed var(--border-color); padding-top: 1.25rem;">
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="step-card-num" style="background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2);">1</div>
+                <div class="step-card-num" style="background: rgba(134, 239, 172, 0.08); color: #86efac; border: 1px dashed rgba(134, 239, 172, 0.3);">1</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Launch Crew Standing</h4>
-                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Compare growth averages, check orbital standings, and view subject-wise top campaign leads.</p>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Cohort Leaderboard</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Compare growth averages, check standings, and view subject-wise top campaign leads.</p>
                 </div>
               </div>
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="step-card-num" style="background: rgba(127, 0, 255, 0.15); color: #c084fc; border: 1px solid rgba(127, 0, 255, 0.2);">2</div>
+                <div class="step-card-num" style="background: rgba(253, 224, 71, 0.08); color: #fde047; border: 1px dashed rgba(253, 224, 71, 0.3);">2</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Orbital Skills Radar</h4>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Blackboard Capability Radar</h4>
                   <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Switch to the <b>Learner Dashboard</b> above to inspect detailed capabilities maps and teacher reviews.</p>
                 </div>
               </div>
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="step-card-num" style="background: rgba(245, 159, 0, 0.1); color: #ffd700; border: 1px solid rgba(245, 159, 0, 0.2);">3</div>
+                <div class="step-card-num" style="background: rgba(251, 146, 60, 0.08); color: #fb923c; border: 1px dashed rgba(251, 146, 60, 0.3);">3</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Instant Cosmic Sync</h4>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Instant Database Sync</h4>
                   <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Updates submitted in the <b>Management View</b> sync instantly to everyone's device via GitHub.</p>
                 </div>
               </div>
@@ -323,51 +341,51 @@ function renderLeaderboard(state) {
       
       <!-- Study Desk HUD -->
       <div class="hud-container">
-        <div class="hud-card">
+        <div class="hud-card" style="border: 2px dashed rgba(255,255,255,0.15);">
           <div class="hud-icon">👥</div>
           <div class="hud-info">
-            <span class="hud-label">Launch Crew</span>
-            <span class="hud-value">${studentCount} Hackers</span>
+            <span class="hud-label" style="color: #86efac;">Cohort Size</span>
+            <span class="hud-value" style="font-family: var(--font-chalk);">${studentCount} Hackers</span>
           </div>
         </div>
-        <div class="hud-card purple">
+        <div class="hud-card purple" style="border: 2px dashed rgba(192, 132, 252, 0.3);">
           <div class="hud-icon">📚</div>
           <div class="hud-info">
-            <span class="hud-label">Campaign Funnels</span>
-            <span class="hud-value">${subjectCount} Syllabus</span>
+            <span class="hud-label" style="color: #c084fc;">Funnels Catalog</span>
+            <span class="hud-value" style="font-family: var(--font-chalk);">${subjectCount} Topics</span>
           </div>
         </div>
-        <div class="hud-card gold">
+        <div class="hud-card gold" style="border: 2px dashed rgba(253, 224, 71, 0.3);">
           <div class="hud-icon">📈</div>
           <div class="hud-info">
-            <span class="hud-label">Growth Velocity</span>
-            <span class="hud-value">${cohortAverage}%</span>
+            <span class="hud-label" style="color: #fde047;">Class Average</span>
+            <span class="hud-value" style="font-family: var(--font-chalk);">${cohortAverage}%</span>
           </div>
         </div>
-        <div class="hud-card emerald">
-          <div class="hud-icon">🚀</div>
+        <div class="hud-card emerald" style="border: 2px dashed rgba(52, 211, 153, 0.3);">
+          <div class="hud-icon">📝</div>
           <div class="hud-info">
-            <span class="hud-label">Launch Target</span>
-            <span class="hud-value" style="font-size: 0.95rem; line-height: 1.4; color: #38ef7d;">${upcomingDeadline}</span>
+            <span class="hud-label" style="color: #34d399;">Assignment Deadline</span>
+            <span class="hud-value" style="font-size: 0.9rem; line-height: 1.4; color: #86efac; font-family: var(--font-chalk);">${upcomingDeadline}</span>
           </div>
         </div>
       </div>
       
       ${podiumHtml}
       
-      <div class="glass-panel leaderboard-table-container">
-        <div class="mini-board-title" style="border-bottom: 1px solid var(--border-color); font-weight: 700; padding: 1.25rem 1.5rem;">
+      <div class="glass-panel leaderboard-table-container" style="border: 2px dashed rgba(255, 255, 255, 0.15);">
+        <div class="mini-board-title" style="border-bottom: 1px dashed rgba(255, 255, 255, 0.15); font-weight: 700; padding: 1.25rem 1.5rem; background: rgba(0,0,0,0.15);">
           Active Growth Standings
         </div>
         <div class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th style="width: 80px;">Rank</th>
-                <th>Growth Hacker</th>
-                <th>Achievement Badge</th>
-                <th>Funnel Completion</th>
-                <th>Avg Growth Score</th>
+                <th style="width: 80px; border-bottom: 1px dashed rgba(255,255,255,0.15);">Rank</th>
+                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Growth Hacker</th>
+                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Achievement Badge</th>
+                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Funnel Completion</th>
+                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Avg Growth Score</th>
               </tr>
             </thead>
             <tbody>
@@ -377,8 +395,8 @@ function renderLeaderboard(state) {
         </div>
       </div>
       
-      <h3 class="section-title" style="margin-top: 4rem; font-size: 1.5rem;">
-        ${getIconHtml('award')} Campaign Leaders
+      <h3 class="section-title chalk-text" style="margin-top: 4rem; font-size: 1.6rem; color: #86efac;">
+        ${getIconHtml('award')} Subject Leaders
       </h3>
       <div class="grid-container-2">
         ${miniBoardsHtml}
@@ -392,7 +410,7 @@ function renderLeaderboard(state) {
 // ----------------------------------------------------
 function renderStudentDashboard(state, activeStudentId, onStudentChange) {
   if (state.students.length === 0) {
-    return `<div class="glass-panel" style="padding: 3rem; text-align: center; color: var(--text-secondary);">No student data available. Head to Admin Panel to add students!</div>`;
+    return `<div class="glass-panel" style="padding: 3rem; text-align: center; color: var(--text-secondary); border: 2px dashed rgba(255,255,255,0.15);">No student data available. Head to Admin Panel to add students!</div>`;
   }
   
   const currentStudentId = activeStudentId || state.students[0].id;
@@ -416,19 +434,19 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
     
   let timelineItemsHtml = "";
   if (studentGrades.length === 0) {
-    timelineItemsHtml = `<div style="text-align: center; color: var(--text-secondary); padding: 2rem;">No grades or comments posted for this learner yet.</div>`;
+    timelineItemsHtml = `<div class="chalk-text" style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">No logs or teacher comments posted for this hacker yet.</div>`;
   } else {
     timelineItemsHtml = studentGrades.map(g => {
       const subject = state.subjects.find(s => s.id === g.subjectId);
       return `
         <div class="timeline-item">
-          <div class="timeline-marker">${g.score}</div>
-          <div class="timeline-content sticky-note">
+          <div class="timeline-marker chalk-formula" style="color: #fde047; font-size: 1rem; border: 1.5px dashed #fde047; background: rgba(0,0,0,0.2);">${g.score}</div>
+          <div class="timeline-content sticky-note" style="border: 2px dashed rgba(255,255,255,0.15); background: rgba(0,0,0,0.12); transform: rotate(${Math.sin(g.score)*0.8}deg);">
             <div class="timeline-header">
-              <span class="timeline-subject">${subject ? subject.name : "Deleted Subject"}</span>
-              <span class="timeline-date">${g.date}</span>
+              <span class="timeline-subject" style="color: #86efac;">${subject ? subject.name : "Deleted Subject"}</span>
+              <span class="timeline-date" style="color: rgba(255,255,255,0.4); font-family: var(--font-chalk);">${g.date}</span>
             </div>
-            <div class="timeline-feedback">${g.feedback || "No additional comments left by teacher."}</div>
+            <div class="timeline-feedback chalk-text" style="color: #cbd5e1; font-size: 0.95rem;">"${g.feedback || 'No comments.'}"</div>
           </div>
         </div>
       `;
@@ -457,7 +475,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       
       // Render deadline tag
       const deadlineHtml = isEnrolled && subject.deadline && subject.deadline !== "No active deadline"
-        ? `<span style="font-size: 0.7rem; background: rgba(248, 87, 166, 0.15); color: #f857a6; border: 1px solid rgba(248, 87, 166, 0.25); padding: 0.15rem 0.4rem; border-radius: 4px; margin-left: 0.5rem; font-weight: 600;">Due ${subject.deadline}</span>`
+        ? `<span class="chalk-text" style="font-size: 0.7rem; background: rgba(253, 224, 71, 0.08); color: #fde047; border: 1px dashed rgba(253, 224, 71, 0.3); padding: 0.15rem 0.4rem; border-radius: 4px; margin-left: 0.5rem;">Due ${subject.deadline}</span>`
         : "";
         
       // Render status text
@@ -469,18 +487,18 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       }
       
       return `
-        <div style="margin-bottom: 1.5rem; opacity: ${isEnrolled ? 1 : 0.4};">
+        <div style="margin-bottom: 1.5rem; opacity: ${isEnrolled ? 1 : 0.45};">
           <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.5rem; align-items: center; flex-wrap: wrap; gap: 0.25rem;">
             <span style="font-weight: 600; display: inline-flex; align-items: center;">
               ${subject.name}
               ${deadlineHtml}
             </span>
-            <span style="font-weight: 700; ${isGraded && isEnrolled ? 'color: #00f2fe;' : 'color: var(--text-muted);'}">
+            <span class="chalk-formula" style="font-size: 1rem; ${isGraded && isEnrolled ? 'color: #fde047;' : 'color: rgba(255,255,255,0.4);'}">
               ${statusText}
             </span>
           </div>
-          <div style="width: 100%; height: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px; overflow: hidden; border: 1px solid var(--border-color);">
-            <div style="width: ${isEnrolled ? score : 0}%; height: 100%; background: ${colorClass}; border-radius: 5px; box-shadow: ${isEnrolled && isGraded ? 'var(--shadow-glow)' : 'none'}; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+          <div style="width: 100%; height: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; overflow: hidden; border: 1.5px dashed rgba(255, 255, 255, 0.15);">
+            <div style="width: ${isEnrolled ? score : 0}%; height: 100%; background: ${colorClass}; border-radius: 6px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);"></div>
           </div>
         </div>
       `;
@@ -592,13 +610,13 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
     <div class="tab-content" id="view-dashboard">
       <div class="dashboard-controls">
         <div>
-          <h2 class="section-title" style="margin-bottom: 0.25rem;">
-            ${getIconHtml('user')} Growth Hacker Orbit Terminal
+          <h2 class="section-title chalk-text" style="margin-bottom: 0.25rem; color: #86efac; font-size: 1.6rem;">
+            ${getIconHtml('user')} Growth Hacker Terminal
           </h2>
-          <p style="color: var(--text-secondary);">Visualize skills profiles, campaign metrics, and teacher logs.</p>
+          <p style="color: var(--text-secondary);">Visualize skills profiles, campaign metrics, and chalk-doodle capability maps.</p>
         </div>
         <div class="select-container">
-          <select id="dashboard-student-select">
+          <select id="dashboard-student-select" style="border: 2px dashed rgba(255,255,255,0.15);">
             ${selectOptionsHtml}
           </select>
         </div>
@@ -606,42 +624,42 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       
       <!-- Key Stats Grid -->
       <div class="grid-container-4">
-        <div class="glass-panel stat-card" style="border-left: 3px solid #00f2fe; position: relative;">
-          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">📈</div>
-          <span class="stat-label">Campaign ROI Average</span>
-          <span class="stat-val text-gradient">${stats.average}<span class="points-text" style="font-size: 1.25rem;">%</span></span>
-          <span class="stat-desc">Across ${stats.completedCount} active campaigns</span>
+        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #86efac; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">📈</div>
+          <span class="stat-label" style="color: #86efac;">Campaign Average</span>
+          <span class="stat-val chalk-formula" style="color: #86efac; font-size: 2.5rem; margin-top: 0.5rem;">${stats.average}<span class="points-text" style="font-size: 1.25rem; color: rgba(255,255,255,0.5);">%</span></span>
+          <span class="stat-desc">Across ${stats.completedCount} campaigns</span>
         </div>
-        <div class="glass-panel stat-card" style="border-left: 3px solid #ffd700; position: relative;">
-          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">🏆</div>
-          <span class="stat-label">Orbit Rank</span>
-          <span class="stat-val" style="color: #ffd700;">#${rankIndex}</span>
-          <span class="stat-desc">Out of ${state.students.length} growth hackers</span>
+        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #fde047; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">🏆</div>
+          <span class="stat-label" style="color: #fde047;">Lab Rank</span>
+          <span class="stat-val chalk-formula" style="color: #fde047; font-size: 2.5rem; margin-top: 0.5rem;">#${rankIndex}</span>
+          <span class="stat-desc">Out of ${state.students.length} crew members</span>
         </div>
-        <div class="glass-panel stat-card" style="border-left: 3px solid #38ef7d; position: relative;">
-          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">💪</div>
-          <span class="stat-label">Primary Funnel</span>
-          <span class="stat-val" style="font-size: 1.15rem; color: #38ef7d; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem; max-width: calc(100% - 24px);">
+        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #34d399; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">💪</div>
+          <span class="stat-label" style="color: #34d399;">Primary Funnel</span>
+          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #34d399; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; max-width: calc(100% - 10px);">
             ${stats.strength}
           </span>
-          <span class="stat-desc">Highest performing funnel</span>
+          <span class="stat-desc">Highest performing campaign</span>
         </div>
-        <div class="glass-panel stat-card" style="border-left: 3px solid #ff5858; position: relative;">
-          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.8;">🎯</div>
-          <span class="stat-label">Friction Point</span>
-          <span class="stat-val" style="font-size: 1.15rem; color: #ff5858; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.75rem; max-width: calc(100% - 24px);">
+        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #fb923c; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">🎯</div>
+          <span class="stat-label" style="color: #fb923c;">Friction Point</span>
+          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #fb923c; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; max-width: calc(100% - 10px);">
             ${stats.weakness}
           </span>
-          <span class="stat-desc">Lowest performing funnel</span>
+          <span class="stat-desc">Lowest performing campaign</span>
         </div>
       </div>
       
       <!-- Charts Grid -->
       <div class="analytics-section">
         <!-- Horizontal Progress Bars -->
-        <div class="glass-panel chart-card" style="align-items: stretch; justify-content: flex-start;">
-          <h3 class="chart-title" style="display: flex; align-items: center; gap: 0.5rem;">
-            ${getIconHtml('chart')} Campaign Reach Metrics
+        <div class="glass-panel chart-card" style="align-items: stretch; justify-content: flex-start; border: 2px dashed rgba(255, 255, 255, 0.15);">
+          <h3 class="chart-title chalk-text" style="display: flex; align-items: center; gap: 0.5rem; color: #86efac;">
+            ${getIconHtml('chart')} Campaign Growth Ratings
           </h3>
           <div style="margin-top: 1rem;">
             ${barChartsHtml}
@@ -649,26 +667,26 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         </div>
         
         <!-- SVG Capability Map -->
-        <div class="glass-panel chart-card">
-          <h3 class="chart-title" style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem;">
+        <div class="glass-panel chart-card" style="border: 2px dashed rgba(255, 255, 255, 0.15);">
+          <h3 class="chart-title chalk-text" style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem; color: #86efac;">
             ${getIconHtml('badge')} Growth Capability Radar
           </h3>
           <div class="chart-container" style="flex-direction: column; height: auto;">
             ${drawCapabilitiesRadar()}
-            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; font-size: 0.7rem; color: var(--text-secondary);">
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #00f2fe;"></span> Quantum Sage (95+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #c084fc;"></span> Orbital Pro (80+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ffd700;"></span> Gravity Navigator (70+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ff5858;"></span> Cosmic Cadet (&lt;70)</span>
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; font-size: 0.7rem; color: var(--text-secondary); font-family: var(--font-chalk);">
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #86efac;"></span> Principal Physicist (95+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #34d399;"></span> Growth Alchemist (90+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1;"></span> Funnel Chemist (80+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fb923c;"></span> Lab Apprentice (&lt;80)</span>
             </div>
           </div>
         </div>
       </div>
       
       <!-- Grading Timeline -->
-      <div class="glass-panel timeline-card">
-        <h3 style="font-size: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-          ${getIconHtml('award')} Campaign Logs & Written Briefs
+      <div class="glass-panel timeline-card" style="border: 2px dashed rgba(255, 255, 255, 0.15);">
+        <h3 class="chalk-text" style="font-size: 1.35rem; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; color: #86efac;">
+          ${getIconHtml('award')} Campaign Evaluations & Chalk Notes
         </h3>
         <div class="timeline-list">
           ${timelineItemsHtml}

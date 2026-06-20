@@ -1,42 +1,44 @@
 /* Core Design System & Styling - AI Tools Performance Tracker */
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Colors - Blackboard Laboratory Theme */
-  --bg-primary: #101c17; /* Deep green chalkboard */
-  --bg-secondary: #0d1612;
-  --bg-card: rgba(16, 28, 23, 0.65);
-  --bg-card-hover: rgba(22, 38, 31, 0.8);
-  --border-color: rgba(255, 255, 255, 0.15);
+  /* Colors - Artificial Intelligence Theme */
+  --bg-primary: #060814; /* Space Cockpit Black */
+  --bg-secondary: #0b0f19;
+  --bg-card: rgba(10, 15, 30, 0.7);
+  --bg-card-hover: rgba(16, 24, 48, 0.85);
+  --border-color: rgba(0, 242, 254, 0.15);
+  --border-color-glow: rgba(0, 242, 254, 0.45);
   
   --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #86efac; /* Soft green chalk accent */
+  --text-secondary: #94a3b8;
+  --text-muted: #38bdf8; /* Sleek Neon Cyan accent */
   
   /* Gradients */
-  --grad-primary: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%); /* Mint chalk gradient */
-  --grad-secondary: linear-gradient(135deg, #fde047 0%, #ca8a04 100%); /* Yellow chalk */
-  --grad-accent: linear-gradient(135deg, #c084fc 0%, #818cf8 100%); /* Purple/blue chalk */
-  --grad-success: linear-gradient(135deg, #6ee7b7 0%, #059669 100%);
-  --grad-warning: linear-gradient(135deg, #fda4af 0%, #f43f5e 100%);
-  --grad-dark: linear-gradient(180deg, #0f172a 0%, #020617 100%);
-  --grad-card-glow: radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 50%);
+  --grad-primary: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); /* Neon Cyan/Blue */
+  --grad-secondary: linear-gradient(135deg, #a855f7 0%, #d946ef 100%); /* Neon Violet/Purple */
+  --grad-accent: linear-gradient(135deg, #10b981 0%, #059669 100%); /* Cyber Green */
+  --grad-success: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  --grad-warning: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+  --grad-dark: linear-gradient(180deg, #0a0f1d 0%, #030712 100%);
+  --grad-card-glow: radial-gradient(circle at top right, rgba(0, 242, 254, 0.08), transparent 50%);
   
   /* Box Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 15px rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.8);
+  --shadow-glow: 0 0 15px rgba(0, 242, 254, 0.15);
+  --shadow-glow-purple: 0 0 15px rgba(168, 85, 247, 0.15);
   
   /* Fonts */
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-chalk: 'Architects Daughter', cursive;
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-code: 'Fira Code', monospace;
   
   /* Layout settings */
-  --border-radius-sm: 8px;
-  --border-radius-md: 16px;
-  --border-radius-lg: 24px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
 }
 
 /* Reset */
@@ -49,12 +51,13 @@
 body {
   font-family: var(--font-body);
   background-color: var(--bg-primary);
-  /* Deep green slate chalkboard texture */
+  /* Futuristic Tech Grid background */
   background-image: 
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
-    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
-    linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 4px;
+    radial-gradient(circle at 20% 20%, rgba(0, 242, 254, 0.035) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.035) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
@@ -62,26 +65,32 @@ body {
   overflow-x: hidden;
 }
 
-/* Chalk Writing Utility */
+/* Tech Writing & Code Utilities */
 .chalk-text {
-  font-family: var(--font-chalk) !important;
-  color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.04em;
+  font-family: var(--font-display) !important;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.25);
 }
 
 .chalk-formula {
-  font-family: var(--font-chalk) !important;
-  color: #fde047; /* Yellow chalk */
-  font-size: 1.05rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-code) !important;
+  color: #38bdf8; /* Cyan accent */
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
   line-height: 1.4;
+  background: rgba(0, 0, 0, 0.35) !important;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 242, 254, 0.15) !important;
+  display: inline-block;
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.03em;
 }
 
 .text-gradient {
@@ -92,88 +101,104 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-gradient-purple {
-  background: var(--grad-accent);
+  background: var(--grad-secondary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Chalkboard Sketch Card Panels */
+/* Glassmorphic Cyber Panels */
 .glass-panel {
   background: var(--bg-card);
-  border: 2px dashed rgba(255, 255, 255, 0.15); /* Double-dashed chalk outline */
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), inset 0 0 20px rgba(0, 242, 254, 0.02);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .glass-panel:hover {
   background: var(--bg-card-hover);
-  border-color: rgba(255, 255, 255, 0.4); /* Bright chalk line */
-  transform: translateY(-4px) rotate(0.1deg);
+  border-color: var(--border-color-glow);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
-/* Premium Chalkboard Hero Banner styles */
+/* AI Core Welcome Banner */
 .study-hero-banner {
-  background: rgba(12, 22, 18, 0.85) !important;
-  border: 2px dashed #34d399 !important; /* Mint chalk outline */
-  box-shadow: var(--shadow-md);
+  background: rgba(10, 15, 30, 0.8) !important;
+  border: 1px solid rgba(168, 85, 247, 0.35) !important; /* purple accent border */
+  box-shadow: var(--shadow-md), 0 0 20px rgba(168, 85, 247, 0.1);
 }
 
 .study-hero-banner:hover {
-  border-color: #059669 !important;
-  box-shadow: var(--shadow-lg), 0 0 25px rgba(52, 211, 153, 0.15);
+  border-color: rgba(168, 85, 247, 0.6) !important;
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(168, 85, 247, 0.2), var(--shadow-glow-purple);
   transform: translateY(-2px);
 }
 
-/* Hand-drawn Pedestals */
+/* Cyber Holo Pedestals */
 .pedestal {
   position: relative;
   width: 100%;
-  border-radius: 12px 12px 0 0;
+  border-radius: 8px 8px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   padding: 1.5rem 1rem;
-  background: rgba(16, 28, 23, 0.5);
-  border: 2px dashed rgba(255, 255, 255, 0.15);
+  background: rgba(10, 15, 30, 0.6);
+  border: 1px solid rgba(0, 242, 254, 0.12);
   border-bottom: none;
   transition: all 0.3s ease;
+  box-shadow: inset 0 20px 30px -10px rgba(0, 242, 254, 0.05);
 }
 
+.pedestal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.pedestal.gold::before { background: var(--grad-primary); }
+.pedestal.silver::before { background: var(--grad-secondary); }
+.pedestal.bronze::before { background: var(--grad-accent); }
+
 .pedestal.gold {
-  border-color: rgba(253, 224, 71, 0.4);
-  background: rgba(253, 224, 71, 0.03);
+  border-color: rgba(0, 242, 254, 0.25);
+  background: rgba(0, 242, 254, 0.02);
 }
 
 .pedestal.silver {
-  border-color: rgba(209, 213, 219, 0.4);
-  background: rgba(209, 213, 219, 0.03);
+  border-color: rgba(168, 85, 247, 0.25);
+  background: rgba(168, 85, 247, 0.02);
 }
 
 .pedestal.bronze {
-  border-color: rgba(251, 146, 60, 0.4);
-  background: rgba(251, 146, 60, 0.03);
+  border-color: rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.02);
 }
 
 .pedestal:hover {
   transform: translateY(-6px);
-  background: rgba(22, 38, 31, 0.7);
+  background: rgba(16, 24, 48, 0.8);
 }
 
-.pedestal.gold:hover { border-color: #fde047; box-shadow: 0 0 15px rgba(253, 224, 71, 0.15); }
-.pedestal.silver:hover { border-color: #e5e7eb; box-shadow: 0 0 15px rgba(229, 231, 235, 0.15); }
-.pedestal.bronze:hover { border-color: #fb923c; box-shadow: 0 0 15px rgba(251, 146, 60, 0.15); }
+.pedestal.gold:hover { border-color: #00f2fe; box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); }
+.pedestal.silver:hover { border-color: #a855f7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+.pedestal.bronze:hover { border-color: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
 
 /* Premium Collapsible Details/Summary */
 details.handbook-accordion {
-  background: rgba(10, 18, 14, 0.4);
-  border: 2px dashed rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
+  background: rgba(10, 15, 30, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   margin-top: 1rem;
   transition: all 0.3s ease;
 }
@@ -199,7 +224,7 @@ details.handbook-accordion summary::after {
   content: '▼';
   font-size: 0.7rem;
   margin-left: auto;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 242, 254, 0.6);
   transition: transform 0.2s ease;
 }
 
@@ -208,14 +233,14 @@ details.handbook-accordion[open] summary::after {
 }
 
 details.handbook-accordion[open] {
-  background: rgba(10, 18, 14, 0.75);
-  border-color: rgba(52, 211, 153, 0.4);
-  box-shadow: 0 4px 20px rgba(52, 211, 153, 0.05);
+  background: rgba(10, 15, 30, 0.75);
+  border-color: rgba(0, 242, 254, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.05);
 }
 
 .handbook-content {
   padding: 1.25rem;
-  border-top: 1px dashed var(--border-color);
+  border-top: 1px solid var(--border-color);
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
@@ -229,9 +254,9 @@ details.handbook-accordion[open] {
 }
 
 .hud-card {
-  background: rgba(16, 28, 23, 0.7);
-  border: 2px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
+  background: rgba(10, 15, 30, 0.75);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
@@ -240,17 +265,18 @@ details.handbook-accordion[open] {
 }
 
 .hud-card:hover {
-  background: rgba(22, 38, 31, 0.85);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(16, 24, 48, 0.9);
+  border-color: var(--border-color-glow);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
 }
 
 .hud-icon {
   width: 42px;
   height: 42px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px dashed rgba(255, 255, 255, 0.2) !important;
+  border-radius: 6px;
+  background: rgba(0, 242, 254, 0.05) !important;
+  border: 1px solid rgba(0, 242, 254, 0.2) !important;
   color: #fff !important;
   display: flex;
   align-items: center;
@@ -260,15 +286,21 @@ details.handbook-accordion[open] {
 }
 
 .hud-card.purple .hud-icon {
-  color: #c084fc !important;
+  color: #a855f7 !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  background: rgba(168, 85, 247, 0.05) !important;
 }
 
 .hud-card.emerald .hud-icon {
-  color: #34d399 !important;
+  color: #10b981 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  background: rgba(16, 185, 129, 0.05) !important;
 }
 
 .hud-card.gold .hud-icon {
-  color: #fde047 !important;
+  color: #f59f00 !important;
+  border-color: rgba(245, 159, 0, 0.3) !important;
+  background: rgba(245, 159, 0, 0.05) !important;
 }
 
 .hud-info {
@@ -278,43 +310,44 @@ details.handbook-accordion[open] {
 
 .hud-label {
   font-size: 0.75rem;
-  color: #86efac;
+  color: var(--text-secondary);
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.05em;
 }
 
 .hud-value {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 700;
   color: #fff;
 }
 
 /* Sticky notes for Evaluations feedback */
 .sticky-note {
-  background: rgba(16, 28, 23, 0.45);
-  border: 2px dashed rgba(255, 255, 255, 0.12);
+  background: rgba(10, 15, 30, 0.45);
+  border: 1px solid var(--border-color);
   padding: 1.25rem;
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease;
 }
 
 .sticky-note::before {
-  content: '✏️' !important;
+  content: '⚡' !important;
   position: absolute;
   right: 1.25rem;
   top: 1.25rem;
   font-size: 1.1rem;
-  opacity: 0.25;
+  opacity: 0.15;
 }
 
 .sticky-note:hover {
-  background: rgba(22, 38, 31, 0.6);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: rotate(-0.5deg) scale(1.002);
+  background: rgba(16, 24, 48, 0.6);
+  border-color: var(--border-color-glow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
 }
 
 .hero-steps-grid {
@@ -711,9 +744,9 @@ tr:nth-child(3) .rank-badge {
 }
 
 .badge-tag {
-  background: rgba(134, 239, 172, 0.08);
-  color: #86efac;
-  border: 1px dashed rgba(134, 239, 172, 0.35);
+  background: rgba(0, 242, 254, 0.08);
+  color: #00f2fe;
+  border: 1px solid rgba(0, 242, 254, 0.3);
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -908,19 +941,21 @@ select:hover, select:focus {
 }
 
 .radar-poly-fill {
-  fill: rgba(134, 239, 172, 0.08);
-  stroke: #86efac;
+  fill: rgba(0, 242, 254, 0.12);
+  stroke: #00f2fe;
   stroke-width: 2;
-  stroke-dasharray: 4,2;
+  filter: drop-shadow(0 0 4px rgba(0, 242, 254, 0.3));
 }
 
 .radar-poly-point {
-  fill: #86efac;
-  stroke: #fde047;
+  fill: #a855f7;
+  stroke: #00f2fe;
   stroke-width: 1.5;
+  r: 4.5;
 }
 
 .chart-label-text {
+  font-family: var(--font-body);
   font-size: 10px;
   fill: var(--text-secondary);
   font-weight: 500;

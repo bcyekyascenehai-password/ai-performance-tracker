@@ -89,13 +89,13 @@ function renderLeaderboard(state) {
   // Custom helper for initials
   const getInitials = (name) => name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
-  // Blackboard Growth Badges
+  // AI Performance Badge Mappings
   const getBadgeName = (avg) => {
-    if (avg >= 95) return "Principal Physicist ⚛️";
-    if (avg >= 90) return "Growth Alchemist 🧪";
-    if (avg >= 80) return "Funnel Chemist 📐";
-    if (avg >= 70) return "Hypothesis Tester 🔬";
-    return "Lab Apprentice 🥼";
+    if (avg >= 95) return "Super Intelligence 🧠";
+    if (avg >= 90) return "Neural Architect 🌐";
+    if (avg >= 80) return "Algorithm Engineer ⚙️";
+    if (avg >= 70) return "Data Analyst 📊";
+    return "AI Cadet 🤖";
   };
   
   // Calculate Cohort HUD Stats
@@ -107,7 +107,7 @@ function renderLeaderboard(state) {
     : 0;
     
   // Find next upcoming deadline
-  let upcomingDeadline = "Lab Inactive";
+  let upcomingDeadline = "System Stable";
   const now = new Date();
   const futureDeadlines = state.subjects
     .filter(s => s.deadline && s.deadline !== "Completed" && s.deadline !== "No active deadline")
@@ -117,58 +117,58 @@ function renderLeaderboard(state) {
     .filter(d => d.date >= now)
     .sort((a, b) => a.date - b.date);
   if (futureDeadlines.length > 0) {
-    upcomingDeadline = `Due: ${futureDeadlines[0].raw}`;
+    upcomingDeadline = `T-${futureDeadlines[0].raw}`;
   }
 
-  // Render chalkboard pedestals
+  // Render cyber holopodiums
   let podiumHtml = "";
   if (top1 || top2 || top3) {
     podiumHtml = `
       <div class="podium-container" style="align-items: flex-end;">
-        <!-- 2nd Place: Funnel Chemist -->
+        <!-- 2nd Place: Secondary Core -->
         ${top2 ? `
           <div class="podium-column second">
-            <div class="podium-avatar" style="border: 2px dashed #cbd5e1;">
+            <div class="podium-avatar" style="border: 2px solid rgba(168, 85, 247, 0.4); box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);">
               ${getInitials(top2.name)}
-              <div class="podium-badge" style="background: #cbd5e1; border: 1px dashed #475569;">2</div>
+              <div class="podium-badge" style="background: var(--grad-secondary); color: #fff;">2</div>
             </div>
             <div class="pedestal silver" style="height: 120px;">
               <div class="podium-name">${top2.name}</div>
-              <div class="chalk-text" style="font-size: 0.7rem; color: #cbd5e1; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Funnel Chemist</div>
-              <div class="podium-score chalk-formula" style="color: #cbd5e1;">${top2.average} <span style="font-size: 0.75rem;">pts</span></div>
-              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; border-color: rgba(255,255,255,0.2);">${getBadgeName(top2.average)}</div>
+              <div class="chalk-text" style="font-size: 0.7rem; color: #a855f7; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Secondary Core</div>
+              <div class="podium-score chalk-formula" style="color: #a855f7;">${top2.average} <span style="font-size: 0.75rem;">pts</span></div>
+              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; border-color: rgba(168,85,247,0.3); color: #a855f7; background: rgba(168,85,247,0.05);">${getBadgeName(top2.average)}</div>
             </div>
           </div>
         ` : ''}
         
-        <!-- 1st Place: Lead Growth Alchemist -->
+        <!-- 1st Place: Primary Core -->
         ${top1 ? `
           <div class="podium-column first">
-            <div class="podium-avatar" style="border: 2px dashed #fde047; box-shadow: 0 0 15px rgba(253, 224, 71, 0.2);">
+            <div class="podium-avatar" style="border: 2px solid rgba(0, 242, 254, 0.6); box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);">
               ${getInitials(top1.name)}
-              <div class="podium-badge" style="background: #fde047; border: 1px dashed #854d0e;">1</div>
+              <div class="podium-badge" style="background: var(--grad-primary); color: #000;">1</div>
             </div>
             <div class="pedestal gold" style="height: 160px;">
               <div class="podium-name" style="font-weight: 700;">${top1.name}</div>
-              <div class="chalk-text" style="font-size: 0.7rem; color: #fde047; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Growth Alchemist</div>
-              <div class="podium-score chalk-formula" style="color: #fde047; font-size: 1.35rem;">${top1.average} <span style="font-size: 0.75rem;">pts</span></div>
-              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(253, 224, 71, 0.08); color: #fde047; border-color: rgba(253, 224, 71, 0.2);">${getBadgeName(top1.average)}</div>
+              <div class="chalk-text" style="font-size: 0.7rem; color: #00f2fe; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Primary Core</div>
+              <div class="podium-score chalk-formula" style="color: #00f2fe; font-size: 1.35rem;">${top1.average} <span style="font-size: 0.75rem;">pts</span></div>
+              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(0, 242, 254, 0.08); color: #00f2fe; border-color: rgba(0, 242, 254, 0.3);">${getBadgeName(top1.average)}</div>
             </div>
           </div>
         ` : ''}
         
-        <!-- 3rd Place: Lab Technician -->
+        <!-- 3rd Place: Auxiliary Node -->
         ${top3 ? `
           <div class="podium-column third">
-            <div class="podium-avatar" style="border: 2px dashed #fb923c;">
+            <div class="podium-avatar" style="border: 2px solid rgba(16, 185, 129, 0.4); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">
               ${getInitials(top3.name)}
-              <div class="podium-badge" style="background: #fb923c; border: 1px dashed #7c2d12;">3</div>
+              <div class="podium-badge" style="background: var(--grad-accent); color: #fff;">3</div>
             </div>
             <div class="pedestal bronze" style="height: 90px;">
               <div class="podium-name">${top3.name}</div>
-              <div class="chalk-text" style="font-size: 0.7rem; color: #fb923c; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Lab Technician</div>
-              <div class="podium-score chalk-formula" style="color: #fb923c;">${top3.average} <span style="font-size: 0.75rem;">pts</span></div>
-              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(251, 146, 60, 0.08); color: #fb923c; border-color: rgba(251, 146, 60, 0.2);">${getBadgeName(top3.average)}</div>
+              <div class="chalk-text" style="font-size: 0.7rem; color: #10b981; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Auxiliary Node</div>
+              <div class="podium-score chalk-formula" style="color: #10b981;">${top3.average} <span style="font-size: 0.75rem;">pts</span></div>
+              <div class="badge-tag" style="margin-top: 0.5rem; font-size: 0.65rem; background: rgba(16, 185, 129, 0.08); color: #10b981; border-color: rgba(16, 185, 129, 0.3);">${getBadgeName(top3.average)}</div>
             </div>
           </div>
         ` : ''}
@@ -181,27 +181,27 @@ function renderLeaderboard(state) {
     return `
       <tr class="leaderboard-row">
         <td>
-          <div class="rank-badge" style="border: 1px dashed rgba(255,255,255,0.2); background: transparent;">${index + 1}</div>
+          <div class="rank-badge" style="border: 1px solid rgba(0,242,254,0.15); background: rgba(0,242,254,0.02); color: #00f2fe; text-shadow: 0 0 5px rgba(0,242,254,0.4);">${index + 1}</div>
         </td>
         <td>
           <div class="student-info">
-            <div class="student-avatar" style="background: rgba(134, 239, 172, 0.05); border: 1px dashed rgba(134, 239, 172, 0.3); color: #86efac;">${getInitials(student.name)}</div>
+            <div class="student-avatar" style="background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); color: #00f2fe;">${getInitials(student.name)}</div>
             <div>
               <div style="font-weight: 600;">${student.name}</div>
-              <div style="font-size: 0.75rem; color: var(--text-secondary)">Lab Member since ${student.joinedDate}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary)">System Node active since ${student.joinedDate}</div>
             </div>
           </div>
         </td>
         <td>
-          <span class="badge-tag" style="background: rgba(134, 239, 172, 0.08); color: #86efac; border: 1px dashed rgba(134, 239, 172, 0.3);">${getBadgeName(student.average)}</span>
+          <span class="badge-tag" style="background: rgba(0, 242, 254, 0.05); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2);">${getBadgeName(student.average)}</span>
         </td>
         <td>
           <div style="color: var(--text-secondary); font-size: 0.9rem;">
-            ${student.completedCount} / ${student.enrolledCount} campaigns graded
+            ${student.completedCount} / ${student.enrolledCount} nodes verified
           </div>
         </td>
         <td>
-          <div class="score-badge chalk-formula" style="color: #fde047; font-size: 1.1rem;">${student.average} <span class="points-text" style="color: rgba(255,255,255,0.5);">pts</span></div>
+          <div class="score-badge chalk-formula" style="color: #00f2fe; font-size: 1.1rem;">${student.average} <span class="points-text" style="color: rgba(255,255,255,0.4);">pts</span></div>
         </td>
       </tr>
     `;
@@ -226,24 +226,24 @@ function renderLeaderboard(state) {
         
       let listItems = "";
       if (subjectGrades.length === 0) {
-        listItems = `<div class="chalk-text" style="padding: 1rem; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.4)">No campaigns graded yet</div>`;
+        listItems = `<div class="chalk-text" style="padding: 1rem; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.3)">No neural logs recorded</div>`;
       } else {
         listItems = subjectGrades.map((g, idx) => `
-          <div class="mini-board-item" style="border-bottom: 1px dashed rgba(255,255,255,0.05);">
+          <div class="mini-board-item" style="border-bottom: 1px solid rgba(255,255,255,0.03);">
             <span class="mini-board-name">
-              <span style="color: #86efac; margin-right: 0.5rem; font-weight: 700;">#${idx + 1}</span>
+              <span style="color: #00f2fe; margin-right: 0.5rem; font-weight: 700;">#${idx + 1}</span>
               ${g.name}
             </span>
-            <span class="mini-board-score chalk-formula" style="color: #fde047;">${g.score} <span style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">pts</span></span>
+            <span class="mini-board-score chalk-formula" style="color: #00f2fe;">${g.score} <span style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">pts</span></span>
           </div>
         `).join('');
       }
       
       return `
-        <div class="glass-panel" style="overflow: hidden; border: 2px dashed rgba(255, 255, 255, 0.12);">
-          <div class="mini-board-title" style="border-bottom: 1px dashed rgba(255,255,255,0.12); background: rgba(0,0,0,0.15);">
+        <div class="glass-panel" style="overflow: hidden; border: 1px solid rgba(0, 242, 254, 0.15);">
+          <div class="mini-board-title" style="border-bottom: 1px solid rgba(0,242,254,0.15); background: rgba(0,0,0,0.25);">
             <span style="font-weight: 700;">${subject.name}</span>
-            <span class="chalk-text" style="font-size: 0.75rem; color: #86efac;">Top Researcher</span>
+            <span class="chalk-text" style="font-size: 0.75rem; color: #a855f7;">Core Lead</span>
           </div>
           <div class="mini-board-list">
             ${listItems}
@@ -258,80 +258,103 @@ function renderLeaderboard(state) {
       
       <!-- Collapsible Cohort Handbook Banner -->
       <div class="glass-panel study-hero-banner" style="margin-bottom: 2.5rem; padding: 2rem; position: relative;">
-        <!-- Sketchy Chalkboard Doodle SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="160" height="160" style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.2; pointer-events: none; user-select: none;">
-          <path d="M 20,30 L 180,30 L 120,120 L 120,170 L 80,170 L 80,120 Z" fill="none" stroke="#86efac" stroke-width="2" stroke-dasharray="6,4" stroke-linecap="round" />
-          <line x1="35" y1="52" x2="165" y2="52" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4,4" />
-          <line x1="50" y1="80" x2="150" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4,4" />
-          <line x1="68" y1="108" x2="132" y2="108" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4,4" />
-          <text x="100" y="45" fill="#fff" font-family="'Architects Daughter', cursive" font-size="10" text-anchor="middle">TRAFFIC</text>
-          <text x="100" y="73" fill="#fde047" font-family="'Architects Daughter', cursive" font-size="10" text-anchor="middle">LEADS</text>
-          <text x="100" y="101" fill="#86efac" font-family="'Architects Daughter', cursive" font-size="10" text-anchor="middle">CONV</text>
-          <text x="100" y="148" fill="#fb923c" font-family="'Architects Daughter', cursive" font-size="11" text-anchor="middle">$$ ROI $$</text>
-          <path d="M 10,180 Q 70,175 140,110 T 195,25" fill="none" stroke="#fde047" stroke-width="2" stroke-dasharray="5,5" />
-          <path d="M 185,25 L 195,25 L 195,35" fill="none" stroke="#fde047" stroke-width="2" />
+        <!-- Glowing Neural Network SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="160" height="160" style="position: absolute; right: 2rem; top: 1.5rem; opacity: 0.35; pointer-events: none; user-select: none;">
+          <!-- Input nodes -->
+          <circle cx="30" cy="50" r="5" fill="#00f2fe" />
+          <circle cx="30" cy="100" r="5" fill="#00f2fe" />
+          <circle cx="30" cy="150" r="5" fill="#00f2fe" />
+          
+          <!-- Hidden nodes -->
+          <circle cx="95" cy="40" r="5" fill="#a855f7" />
+          <circle cx="95" cy="80" r="5" fill="#a855f7" />
+          <circle cx="95" cy="120" r="5" fill="#a855f7" />
+          <circle cx="95" cy="160" r="5" fill="#a855f7" />
+          
+          <!-- Output nodes -->
+          <circle cx="160" cy="75" r="7" fill="#10b981" />
+          <circle cx="160" cy="125" r="7" fill="#10b981" />
+          
+          <!-- Synapse connections -->
+          <line x1="30" y1="50" x2="95" y2="40" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1.2" />
+          <line x1="30" y1="50" x2="95" y2="80" stroke="rgba(0, 242, 254, 0.15)" stroke-width="1" />
+          <line x1="30" y1="100" x2="95" y2="40" stroke="rgba(0, 242, 254, 0.15)" stroke-width="1" />
+          <line x1="30" y1="100" x2="95" y2="80" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1.2" />
+          <line x1="30" y1="100" x2="95" y2="120" stroke="rgba(0, 242, 254, 0.15)" stroke-width="1" />
+          <line x1="30" y1="150" x2="95" y2="120" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1.2" />
+          <line x1="30" y1="150" x2="95" y2="160" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1.5" />
+          
+          <line x1="95" y1="40" x2="160" y2="75" stroke="rgba(168, 85, 247, 0.2)" stroke-width="1.2" />
+          <line x1="95" y1="80" x2="160" y2="75" stroke="rgba(168, 85, 247, 0.15)" stroke-width="1" />
+          <line x1="95" y1="80" x2="160" y2="125" stroke="rgba(168, 85, 247, 0.15)" stroke-width="1" />
+          <line x1="95" y1="120" x2="160" y2="75" stroke="rgba(168, 85, 247, 0.15)" stroke-width="1" />
+          <line x1="95" y1="120" x2="160" y2="125" stroke="rgba(168, 85, 247, 0.25)" stroke-width="1.5" />
+          <line x1="95" y1="160" x2="160" y2="125" stroke="rgba(168, 85, 247, 0.25)" stroke-width="1.2" />
+          
+          <circle cx="62" cy="45" r="2" fill="#fff" />
+          <circle cx="127" cy="102" r="2" fill="#fff" />
         </svg>
 
         <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
-          Growth Hacker's Blackboard Lab
+          AI Core Engine & Performance Hub
         </h2>
         <p style="color: var(--text-secondary); max-width: 800px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem;">
-          Welcome to the chalkboard growth lab! We analyze cohort data, campaign mechanics, and conversion funnels. Write your marketing equations, monitor student research, and evaluate conversion rates.
+          Welcome to the AI Core Engine performance dashboard! We monitor model convergence, learning weights, prompts execution metrics, and optimization vectors in autonomous networks.
         </p>
         
         <details class="handbook-accordion">
-          <summary>📖 Access Growth Campaigns Directory & Formula Sheet</summary>
+          <summary>📖 View Neural Architecture, Nodes Directory & Parameter Weights</summary>
           <div class="handbook-content">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 1.5rem;">
               <div>
-                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">📋 Active Campaign Syllabus</h4>
+                <h4 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.05rem;">📊 Active Core Nodes Configuration</h4>
                 <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.5rem;">
                   ${state.subjects.map(sub => `
-                    <li style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.85rem;">
-                      <strong style="color: #86efac;">${sub.name}</strong> - <span style="color: var(--text-secondary);">${sub.description || 'No description.'}</span>
+                    <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-size: 0.85rem;">
+                      <strong style="color: #00f2fe;">${sub.name}</strong> - <span style="color: var(--text-secondary);">${sub.description || 'No description.'}</span>
                     </li>
                   `).join('')}
                 </ul>
               </div>
               <div>
-                <h4 class="chalk-text" style="color: #fff; margin-bottom: 1rem; font-size: 1.15rem; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.5rem;">⚛️ Growth Marketing Physics Formulas</h4>
+                <h4 class="chalk-text" style="color: #fff; margin-bottom: 1rem; font-size: 1.15rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem;">🧠 Transformer Mechanics & Optimization</h4>
                 <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.95rem;">
-                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
-                    ROI = &frac12; (Engagement &times; Conversion&sup2;) &divide; Friction
+                  <li class="chalk-formula" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.65rem;">
+                    Attention(Q, K, V) = softmax(Q Kᵀ / √dₖ) V
                   </li>
-                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
-                    Velocity<sub>viral</sub> = Content &times; Reach&sup2; &times; (1 - Friction)
+                  <li class="chalk-formula" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.65rem;">
+                    Loss(x) = -Σ y log(ŷ) + λ||W||²
                   </li>
-                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
-                    Traffic<sub>organic</sub> = &int; (Backlinks &times; Relevance<sub>AI</sub>) dt
+                  <li class="chalk-formula" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.65rem;">
+                    Prompt_Weight = (Precision &times; Temperature) &divide; Noise
                   </li>
-                  <li class="chalk-formula" style="border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.65rem;">
-                    Bounce = &delta; &times; (Friction &divide; Value<sub>interactive</sub>)
+                  <li class="chalk-formula" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.65rem;">
+                    Convergence = &delta; &times; (Entropy &divide; Capacity)
                   </li>
                 </ul>
               </div>
             </div>
             
-            <div class="hero-steps-grid" style="border-top: 1px dashed var(--border-color); padding-top: 1.25rem;">
+            <div class="hero-steps-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="step-card-num" style="background: rgba(134, 239, 172, 0.08); color: #86efac; border: 1px dashed rgba(134, 239, 172, 0.3);">1</div>
+                <div class="step-card-num" style="background: rgba(0, 242, 254, 0.08); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2);">1</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Cohort Leaderboard</h4>
-                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Compare growth averages, check standings, and view subject-wise top campaign leads.</p>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Model Standings</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Compare nodes accuracy, inspect network convergence, and check active parameter weights.</p>
                 </div>
               </div>
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="step-card-num" style="background: rgba(253, 224, 71, 0.08); color: #fde047; border: 1px dashed rgba(253, 224, 71, 0.3);">2</div>
+                <div class="step-card-num" style="background: rgba(168, 85, 247, 0.08); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.2);">2</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Blackboard Capability Radar</h4>
-                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Switch to the <b>Learner Dashboard</b> above to inspect detailed capabilities maps and teacher reviews.</p>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Neural Accuracy Radar</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Switch to the <b>Learner Dashboard</b> above to inspect detailed capabilities profiles and teacher feedback logs.</p>
                 </div>
               </div>
               <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="step-card-num" style="background: rgba(251, 146, 60, 0.08); color: #fb923c; border: 1px dashed rgba(251, 146, 60, 0.3);">3</div>
+                <div class="step-card-num" style="background: rgba(16, 185, 129, 0.08); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2);">3</div>
                 <div>
-                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Instant Database Sync</h4>
-                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Updates submitted in the <b>Management View</b> sync instantly to everyone's device via GitHub.</p>
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Real-Time Sync</h4>
+                  <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Database mutations submitted in the <b>Management View</b> sync instantly to all clients via the GitHub API.</p>
                 </div>
               </div>
             </div>
@@ -341,51 +364,51 @@ function renderLeaderboard(state) {
       
       <!-- Study Desk HUD -->
       <div class="hud-container">
-        <div class="hud-card" style="border: 2px dashed rgba(255,255,255,0.15);">
-          <div class="hud-icon">👥</div>
+        <div class="hud-card" style="border: 1px solid rgba(0, 242, 254, 0.15);">
+          <div class="hud-icon">🧠</div>
           <div class="hud-info">
-            <span class="hud-label" style="color: #86efac;">Cohort Size</span>
-            <span class="hud-value" style="font-family: var(--font-chalk);">${studentCount} Hackers</span>
+            <span class="hud-label">Active Models</span>
+            <span class="hud-value">${studentCount} Cores</span>
           </div>
         </div>
-        <div class="hud-card purple" style="border: 2px dashed rgba(192, 132, 252, 0.3);">
-          <div class="hud-icon">📚</div>
+        <div class="hud-card purple" style="border: 1px solid rgba(168, 85, 247, 0.15);">
+          <div class="hud-icon">🌐</div>
           <div class="hud-info">
-            <span class="hud-label" style="color: #c084fc;">Funnels Catalog</span>
-            <span class="hud-value" style="font-family: var(--font-chalk);">${subjectCount} Topics</span>
+            <span class="hud-label">Neural Nodes</span>
+            <span class="hud-value">${subjectCount} Topics</span>
           </div>
         </div>
-        <div class="hud-card gold" style="border: 2px dashed rgba(253, 224, 71, 0.3);">
+        <div class="hud-card gold" style="border: 1px solid rgba(245, 159, 0, 0.15);">
           <div class="hud-icon">📈</div>
           <div class="hud-info">
-            <span class="hud-label" style="color: #fde047;">Class Average</span>
-            <span class="hud-value" style="font-family: var(--font-chalk);">${cohortAverage}%</span>
+            <span class="hud-label">System Accuracy</span>
+            <span class="hud-value">${cohortAverage}%</span>
           </div>
         </div>
-        <div class="hud-card emerald" style="border: 2px dashed rgba(52, 211, 153, 0.3);">
-          <div class="hud-icon">📝</div>
+        <div class="hud-card emerald" style="border: 1px solid rgba(16, 185, 129, 0.15);">
+          <div class="hud-icon">🎯</div>
           <div class="hud-info">
-            <span class="hud-label" style="color: #34d399;">Assignment Deadline</span>
-            <span class="hud-value" style="font-size: 0.9rem; line-height: 1.4; color: #86efac; font-family: var(--font-chalk);">${upcomingDeadline}</span>
+            <span class="hud-label">Target Convergence</span>
+            <span class="hud-value" style="font-size: 0.95rem; line-height: 1.4; color: #10b981;">${upcomingDeadline}</span>
           </div>
         </div>
       </div>
       
       ${podiumHtml}
       
-      <div class="glass-panel leaderboard-table-container" style="border: 2px dashed rgba(255, 255, 255, 0.15);">
-        <div class="mini-board-title" style="border-bottom: 1px dashed rgba(255, 255, 255, 0.15); font-weight: 700; padding: 1.25rem 1.5rem; background: rgba(0,0,0,0.15);">
-          Active Growth Standings
+      <div class="glass-panel leaderboard-table-container" style="border: 1px solid rgba(0, 242, 254, 0.15);">
+        <div class="mini-board-title" style="border-bottom: 1px solid rgba(0, 242, 254, 0.15); font-weight: 700; padding: 1.25rem 1.5rem; background: rgba(0,0,0,0.15);">
+          Active Nodes Standings
         </div>
         <div class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th style="width: 80px; border-bottom: 1px dashed rgba(255,255,255,0.15);">Rank</th>
-                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Growth Hacker</th>
-                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Achievement Badge</th>
-                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Funnel Completion</th>
-                <th style="border-bottom: 1px dashed rgba(255,255,255,0.15);">Avg Growth Score</th>
+                <th style="width: 80px; border-bottom: 1px solid rgba(0,242,254,0.15);">Rank</th>
+                <th style="border-bottom: 1px solid rgba(0,242,254,0.15);">Model Node</th>
+                <th style="border-bottom: 1px solid rgba(0,242,254,0.15);">Intelligence Profile</th>
+                <th style="border-bottom: 1px solid rgba(0,242,254,0.15);">Evaluated Parameters</th>
+                <th style="border-bottom: 1px solid rgba(0,242,254,0.15);">Avg Precision</th>
               </tr>
             </thead>
             <tbody>
@@ -395,8 +418,8 @@ function renderLeaderboard(state) {
         </div>
       </div>
       
-      <h3 class="section-title chalk-text" style="margin-top: 4rem; font-size: 1.6rem; color: #86efac;">
-        ${getIconHtml('award')} Subject Leaders
+      <h3 class="section-title chalk-text" style="margin-top: 4rem; font-size: 1.6rem; color: #00f2fe; text-shadow: 0 0 10px rgba(0,242,254,0.2);">
+        ${getIconHtml('award')} Node Leaderboard
       </h3>
       <div class="grid-container-2">
         ${miniBoardsHtml}
@@ -410,7 +433,7 @@ function renderLeaderboard(state) {
 // ----------------------------------------------------
 function renderStudentDashboard(state, activeStudentId, onStudentChange) {
   if (state.students.length === 0) {
-    return `<div class="glass-panel" style="padding: 3rem; text-align: center; color: var(--text-secondary); border: 2px dashed rgba(255,255,255,0.15);">No student data available. Head to Admin Panel to add students!</div>`;
+    return `<div class="glass-panel" style="padding: 3rem; text-align: center; color: var(--text-secondary); border: 1px solid var(--border-color);">No model core data available. Head to Management console to configure nodes!</div>`;
   }
   
   const currentStudentId = activeStudentId || state.students[0].id;
@@ -434,19 +457,19 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
     
   let timelineItemsHtml = "";
   if (studentGrades.length === 0) {
-    timelineItemsHtml = `<div class="chalk-text" style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">No logs or teacher comments posted for this hacker yet.</div>`;
+    timelineItemsHtml = `<div class="chalk-text" style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">No system logs or diagnostics recorded for this model yet.</div>`;
   } else {
     timelineItemsHtml = studentGrades.map(g => {
       const subject = state.subjects.find(s => s.id === g.subjectId);
       return `
         <div class="timeline-item">
-          <div class="timeline-marker chalk-formula" style="color: #fde047; font-size: 1rem; border: 1.5px dashed #fde047; background: rgba(0,0,0,0.2);">${g.score}</div>
-          <div class="timeline-content sticky-note" style="border: 2px dashed rgba(255,255,255,0.15); background: rgba(0,0,0,0.12); transform: rotate(${Math.sin(g.score)*0.8}deg);">
-            <div class="timeline-header">
-              <span class="timeline-subject" style="color: #86efac;">${subject ? subject.name : "Deleted Subject"}</span>
-              <span class="timeline-date" style="color: rgba(255,255,255,0.4); font-family: var(--font-chalk);">${g.date}</span>
+          <div class="timeline-marker chalk-formula" style="color: #00f2fe; font-size: 1rem; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: var(--border-radius-sm);">${g.score}</div>
+          <div class="timeline-content glass-panel" style="border: 1px solid var(--border-color); background: var(--bg-card); padding: 1rem; border-radius: var(--border-radius-md); width: 100%;">
+            <div class="timeline-header" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span class="timeline-subject" style="color: #00f2fe; font-weight: 600;">${subject ? subject.name : "Deleted Subject"}</span>
+              <span class="timeline-date" style="color: rgba(255,255,255,0.4); font-family: var(--font-code); font-size: 0.8rem;">${g.date}</span>
             </div>
-            <div class="timeline-feedback chalk-text" style="color: #cbd5e1; font-size: 0.95rem;">"${g.feedback || 'No comments.'}"</div>
+            <div class="timeline-feedback chalk-text" style="color: #cbd5e1; font-size: 0.95rem;">"${g.feedback || 'No diagnostics recorded.'}"</div>
           </div>
         </div>
       `;
@@ -475,7 +498,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       
       // Render deadline tag
       const deadlineHtml = isEnrolled && subject.deadline && subject.deadline !== "No active deadline"
-        ? `<span class="chalk-text" style="font-size: 0.7rem; background: rgba(253, 224, 71, 0.08); color: #fde047; border: 1px dashed rgba(253, 224, 71, 0.3); padding: 0.15rem 0.4rem; border-radius: 4px; margin-left: 0.5rem;">Due ${subject.deadline}</span>`
+        ? `<span class="chalk-text" style="font-size: 0.7rem; background: rgba(0, 242, 254, 0.05); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2); padding: 0.15rem 0.4rem; border-radius: 4px; margin-left: 0.5rem;">Due ${subject.deadline}</span>`
         : "";
         
       // Render status text
@@ -493,11 +516,11 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
               ${subject.name}
               ${deadlineHtml}
             </span>
-            <span class="chalk-formula" style="font-size: 1rem; ${isGraded && isEnrolled ? 'color: #fde047;' : 'color: rgba(255,255,255,0.4);'}">
+            <span class="chalk-formula" style="font-size: 1rem; ${isGraded && isEnrolled ? 'color: #00f2fe;' : 'color: rgba(255,255,255,0.4);'}">
               ${statusText}
             </span>
           </div>
-          <div style="width: 100%; height: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; overflow: hidden; border: 1.5px dashed rgba(255, 255, 255, 0.15);">
+          <div style="width: 100%; height: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; overflow: hidden; border: 1px solid rgba(0, 242, 254, 0.15);">
             <div style="width: ${isEnrolled ? score : 0}%; height: 100%; background: ${colorClass}; border-radius: 6px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);"></div>
           </div>
         </div>
@@ -530,8 +553,8 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
               <stop offset="100%" stop-color="#4facfe" />
             </linearGradient>
           </defs>
-          <text x="60" y="65" text-anchor="middle" font-family="Outfit" font-weight="800" font-size="18" fill="#fff">${stats.average}</text>
-          <text x="60" y="80" text-anchor="middle" font-family="Inter" font-weight="500" font-size="7" fill="var(--text-secondary)">OVERALL PTS</text>
+          <text x="60" y="65" text-anchor="middle" style="font-family: var(--font-display);" font-weight="800" font-size="18" fill="#fff">${stats.average}</text>
+          <text x="60" y="80" text-anchor="middle" style="font-family: var(--font-body);" font-weight="500" font-size="7" fill="var(--text-secondary)">OVERALL PTS</text>
         </svg>
       `;
     }
@@ -555,10 +578,10 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
     // Web grids with custom colored zones
     let gridsHtml = "";
     const zoneColors = [
-      "rgba(239, 68, 68, 0.18)", // Cadet zone outline
-      "rgba(245, 158, 11, 0.18)", // Navigator zone outline
-      "rgba(59, 130, 246, 0.18)",  // Pro zone outline
-      "rgba(0, 242, 254, 0.3)"    // Sage zone outline
+      "rgba(249, 115, 22, 0.15)",  // Orange (level 1)
+      "rgba(168, 85, 247, 0.15)", // Violet (level 2)
+      "rgba(16, 185, 129, 0.18)", // Emerald (level 3)
+      "rgba(0, 242, 254, 0.3)"    // Cyan (level 4)
     ];
     for (let level = 1; level <= 4; level++) {
       const levelRadius = (radius / 4) * level;
@@ -610,13 +633,13 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
     <div class="tab-content" id="view-dashboard">
       <div class="dashboard-controls">
         <div>
-          <h2 class="section-title chalk-text" style="margin-bottom: 0.25rem; color: #86efac; font-size: 1.6rem;">
-            ${getIconHtml('user')} Growth Hacker Terminal
+          <h2 class="section-title chalk-text" style="margin-bottom: 0.25rem; color: #00f2fe; font-size: 1.6rem;">
+            ${getIconHtml('user')} Model Diagnostics Terminal
           </h2>
-          <p style="color: var(--text-secondary);">Visualize skills profiles, campaign metrics, and chalk-doodle capability maps.</p>
+          <p style="color: var(--text-secondary);">Visualize neural performance metrics, parameter convergence, and capability mapping.</p>
         </div>
         <div class="select-container">
-          <select id="dashboard-student-select" style="border: 2px dashed rgba(255,255,255,0.15);">
+          <select id="dashboard-student-select" style="border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem; border-radius: var(--border-radius-sm);">
             ${selectOptionsHtml}
           </select>
         </div>
@@ -624,42 +647,42 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
       
       <!-- Key Stats Grid -->
       <div class="grid-container-4">
-        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #86efac; position: relative;">
+        <div class="glass-panel stat-card" style="border: 1px solid var(--border-color); border-left: 4px solid #00f2fe; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">📈</div>
-          <span class="stat-label" style="color: #86efac;">Campaign Average</span>
-          <span class="stat-val chalk-formula" style="color: #86efac; font-size: 2.5rem; margin-top: 0.5rem;">${stats.average}<span class="points-text" style="font-size: 1.25rem; color: rgba(255,255,255,0.5);">%</span></span>
-          <span class="stat-desc">Across ${stats.completedCount} campaigns</span>
+          <span class="stat-label" style="color: #00f2fe;">Model Average</span>
+          <span class="stat-val chalk-formula" style="color: #00f2fe; font-size: 2.5rem; margin-top: 0.5rem;">${stats.average}<span class="points-text" style="font-size: 1.25rem; color: rgba(255,255,255,0.5);">%</span></span>
+          <span class="stat-desc">Across ${stats.completedCount} modules</span>
         </div>
-        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #fde047; position: relative;">
+        <div class="glass-panel stat-card" style="border: 1px solid var(--border-color); border-left: 4px solid #a855f7; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">🏆</div>
-          <span class="stat-label" style="color: #fde047;">Lab Rank</span>
-          <span class="stat-val chalk-formula" style="color: #fde047; font-size: 2.5rem; margin-top: 0.5rem;">#${rankIndex}</span>
-          <span class="stat-desc">Out of ${state.students.length} crew members</span>
+          <span class="stat-label" style="color: #a855f7;">Cluster Rank</span>
+          <span class="stat-val chalk-formula" style="color: #a855f7; font-size: 2.5rem; margin-top: 0.5rem;">#${rankIndex}</span>
+          <span class="stat-desc">Out of ${state.students.length} crew models</span>
         </div>
-        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #34d399; position: relative;">
-          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">💪</div>
-          <span class="stat-label" style="color: #34d399;">Primary Funnel</span>
-          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #34d399; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; max-width: calc(100% - 10px);">
+        <div class="glass-panel stat-card" style="border: 1px solid var(--border-color); border-left: 4px solid #10b981; position: relative;">
+          <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">🧠</div>
+          <span class="stat-label" style="color: #10b981;">Max Precision</span>
+          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #10b981; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; max-width: calc(100% - 10px);">
             ${stats.strength}
           </span>
-          <span class="stat-desc">Highest performing campaign</span>
+          <span class="stat-desc">Highest precision subsystem</span>
         </div>
-        <div class="glass-panel stat-card" style="border: 2px dashed rgba(255,255,255,0.15); border-left: 4px dashed #fb923c; position: relative;">
+        <div class="glass-panel stat-card" style="border: 1px solid var(--border-color); border-left: 4px solid #fb923c; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">🎯</div>
           <span class="stat-label" style="color: #fb923c;">Friction Point</span>
           <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #fb923c; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; max-width: calc(100% - 10px);">
             ${stats.weakness}
           </span>
-          <span class="stat-desc">Lowest performing campaign</span>
+          <span class="stat-desc">Lowest convergence subsystem</span>
         </div>
       </div>
       
       <!-- Charts Grid -->
       <div class="analytics-section">
         <!-- Horizontal Progress Bars -->
-        <div class="glass-panel chart-card" style="align-items: stretch; justify-content: flex-start; border: 2px dashed rgba(255, 255, 255, 0.15);">
-          <h3 class="chart-title chalk-text" style="display: flex; align-items: center; gap: 0.5rem; color: #86efac;">
-            ${getIconHtml('chart')} Campaign Growth Ratings
+        <div class="glass-panel chart-card" style="align-items: stretch; justify-content: flex-start; border: 1px solid var(--border-color);">
+          <h3 class="chart-title chalk-text" style="display: flex; align-items: center; gap: 0.5rem; color: #00f2fe;">
+            ${getIconHtml('chart')} Module Precision Metrics
           </h3>
           <div style="margin-top: 1rem;">
             ${barChartsHtml}
@@ -667,26 +690,26 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         </div>
         
         <!-- SVG Capability Map -->
-        <div class="glass-panel chart-card" style="border: 2px dashed rgba(255, 255, 255, 0.15);">
-          <h3 class="chart-title chalk-text" style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem; color: #86efac;">
-            ${getIconHtml('badge')} Growth Capability Radar
+        <div class="glass-panel chart-card" style="border: 1px solid var(--border-color);">
+          <h3 class="chart-title chalk-text" style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem; color: #a855f7;">
+            ${getIconHtml('badge')} Subsystem Capability Radar
           </h3>
           <div class="chart-container" style="flex-direction: column; height: auto;">
             ${drawCapabilitiesRadar()}
-            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; font-size: 0.7rem; color: var(--text-secondary); font-family: var(--font-chalk);">
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #86efac;"></span> Principal Physicist (95+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #34d399;"></span> Growth Alchemist (90+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1;"></span> Funnel Chemist (80+)</span>
-              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fb923c;"></span> Lab Apprentice (&lt;80)</span>
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; font-size: 0.7rem; color: var(--text-secondary); font-family: var(--font-body);">
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #00f2fe;"></span> Super Intelligence (95+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #a855f7;"></span> Neural Architect (90+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span> Algorithm Engineer (80+)</span>
+              <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fb923c;"></span> Data Analyst / Cadet (&lt;80)</span>
             </div>
           </div>
         </div>
       </div>
       
       <!-- Grading Timeline -->
-      <div class="glass-panel timeline-card" style="border: 2px dashed rgba(255, 255, 255, 0.15);">
-        <h3 class="chalk-text" style="font-size: 1.35rem; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; color: #86efac;">
-          ${getIconHtml('award')} Campaign Evaluations & Chalk Notes
+      <div class="glass-panel timeline-card" style="border: 1px solid var(--border-color);">
+        <h3 class="chalk-text" style="font-size: 1.35rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; color: #10b981;">
+          ${getIconHtml('award')} Parameter Evaluations & System Logs
         </h3>
         <div class="timeline-list">
           ${timelineItemsHtml}
@@ -772,9 +795,9 @@ function renderAdminPanel(state, actions) {
         <div class="admin-header">
           <div>
             <h2 class="section-title" style="margin-bottom: 0.25rem;">
-              ${getIconHtml('lock')} Growth Command Center
+              ${getIconHtml('lock')} AI Core Management Center
             </h2>
-            <p style="color: var(--text-secondary);">Launch growth campaign metrics, update funnels catalog, or import/export backup logs.</p>
+            <p style="color: var(--text-secondary);">Manage model parameters, update neural nodes catalog, or import/export backup logs.</p>
           </div>
           <div class="admin-controls-bar">
             <button id="admin-export-btn" class="btn btn-outline">
@@ -815,23 +838,23 @@ function renderAdminPanel(state, actions) {
 
         <!-- Main Form Panel -->
         <div class="glass-panel form-panel">
-          <h3 class="form-title">📝 Log Campaign Metrics & Evaluate Growth</h3>
+          <h3 class="form-title">📝 Evaluate Nodes & Log Diagnostics</h3>
           <form id="grade-entry-form">
             <div class="form-grid">
               <div class="form-group">
-                <label for="grade-student-select">Select Growth Hacker</label>
+                <label for="grade-student-select">Select Model Node</label>
                 <select id="grade-student-select" required>
                   ${studentOptionsHtml}
                 </select>
               </div>
               <div class="form-group">
-                <label for="grade-subject-select">Select Campaign Funnel</label>
+                <label for="grade-subject-select">Select System Node</label>
                 <select id="grade-subject-select" required>
                   ${subjectOptionsHtml}
                 </select>
               </div>
               <div class="form-group">
-                <label for="grade-score">Numerical Growth Score (0 - 100)</label>
+                <label for="grade-score">Average Precision / Score (0 - 100)</label>
                 <input type="number" id="grade-score" min="0" max="100" placeholder="e.g. 88" required>
               </div>
               <div class="form-group">
@@ -839,8 +862,8 @@ function renderAdminPanel(state, actions) {
                 <input type="date" id="grade-date" required>
               </div>
               <div class="form-group form-group-full">
-                <label for="grade-feedback">Written Assessment / Campaign Performance Notes</label>
-                <textarea id="grade-feedback" placeholder="Provide constructive feedback about the hacker's prompt structuring, funnel performance, copy precision, etc." required></textarea>
+                <label for="grade-feedback">Diagnostics / Node Evaluation Logs</label>
+                <textarea id="grade-feedback" placeholder="Provide technical diagnostics about prompt structuring, weight alignment, accuracy metrics, and optimization vectors." required></textarea>
               </div>
             </div>
             <div class="form-actions">
@@ -855,14 +878,14 @@ function renderAdminPanel(state, actions) {
           <div class="glass-panel list-panel">
             <div class="list-panel-header">
               <h3 style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                👥 Onboard Growth Crew (${state.students.length})
+                👥 Register System Nodes (${state.students.length})
               </h3>
             </div>
             <div class="list-items">
               ${studentsListHtml}
             </div>
             <form id="add-student-form" class="add-item-form">
-              <input type="text" id="new-student-name" placeholder="Full name of growth hacker" required style="flex: 1; padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+              <input type="text" id="new-student-name" placeholder="Name / Identifier of Model Node" required style="flex: 1; padding: 0.5rem 0.75rem; font-size: 0.85rem;">
               <button type="submit" class="btn btn-primary" style="padding: 0.5rem 0.75rem;">
                 ${getIconHtml('plus')} Add
               </button>
@@ -873,17 +896,17 @@ function renderAdminPanel(state, actions) {
           <div class="glass-panel list-panel">
             <div class="list-panel-header">
               <h3 style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                📚 Campaign Funnels Catalog (${state.subjects.length})
+                📚 Neural Nodes Catalog (${state.subjects.length})
               </h3>
             </div>
             <div class="list-items">
               ${subjectsListHtml}
             </div>
             <form id="add-subject-form" class="add-item-form" style="flex-direction: column; gap: 0.5rem;">
-              <input type="text" id="new-subject-name" placeholder="Campaign Funnel Name (e.g. Claude Projects)" required style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
-              <input type="text" id="new-subject-desc" placeholder="Brief campaign details" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+              <input type="text" id="new-subject-name" placeholder="Neural Node Name (e.g., Transformer Attention)" required style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+              <input type="text" id="new-subject-desc" placeholder="Brief subsystem description" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
               <button type="submit" class="btn btn-primary" style="padding: 0.5rem 0.75rem; align-self: flex-end;">
-                ${getIconHtml('plus')} Add Funnel
+                ${getIconHtml('plus')} Add Node
               </button>
             </form>
           </div>

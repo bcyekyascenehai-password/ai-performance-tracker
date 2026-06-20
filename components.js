@@ -578,6 +578,12 @@ function renderAdminPanel(state, actions) {
   const studentOptionsHtml = state.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
   const subjectOptionsHtml = state.subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
   
+  const githubPat = localStorage.getItem('github_pat') || '';
+  const isPatConfigured = githubPat.length > 0;
+  const statusHtml = isPatConfigured 
+    ? `<span style="color: #38ef7d; font-weight: 500;">✓ Auto-Sync Active (Token saved locally)</span> <button id="clear-github-token-btn" class="btn btn-outline" style="padding: 0.15rem 0.4rem; font-size: 0.65rem; border-color: rgba(239, 68, 68, 0.3); color: #f87171; margin-left: 0.5rem; border-radius: 4px; display: inline-flex; align-items: center; cursor: pointer;">Deactivate</button>`
+    : `<span style="color: var(--text-muted);">⚠️ Local Only Mode: Changes won't sync to other users until a token is set.</span>`;
+
   // List of students for editing
   const studentsListHtml = state.students.map(student => `
     <div class="list-item">
@@ -637,6 +643,26 @@ function renderAdminPanel(state, actions) {
           </div>
         </div>
         
+        <!-- GitHub Sync Configuration Card -->
+        <div class="glass-panel form-panel" style="margin-bottom: 2rem; border-left: 3px solid #00f2fe;">
+          <h3 class="form-title" style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">⚡ GitHub Auto-Sync Database</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+            Configure your GitHub Personal Access Token (PAT) with <code>repo</code> scope to automatically save and publish all evaluations, learners, and courses to the public repository. Once set up, any changes you make will instantly be visible to all users who visit the tracker.
+          </p>
+          <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+            <div class="form-group" style="margin-bottom: 0; flex: 1; min-width: 250px;">
+              <label for="github-pat-input" style="font-size: 0.8rem; font-weight: 600;">GitHub Personal Access Token (PAT)</label>
+              <input type="password" id="github-pat-input" placeholder="${isPatConfigured ? '••••••••••••••••••••••••••••••••••••' : 'ghp_your_github_token'}" style="width: 100%; margin-top: 0.5rem;">
+            </div>
+            <div class="form-actions" style="margin-top: 0; padding-top: 0;">
+              <button id="save-github-token-btn" class="btn btn-accent" style="height: 42px;">Save Token</button>
+            </div>
+          </div>
+          <div id="github-sync-status" style="font-size: 0.8rem; margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            ${statusHtml}
+          </div>
+        </div>
+
         <!-- Main Form Panel -->
         <div class="glass-panel form-panel">
           <h3 class="form-title">📝 Evaluate Performance & Log Grade</h3>

@@ -11,11 +11,107 @@ let state = {
   isAdminAuthenticated: false
 };
 
-// --- Initialization ---
-function init() {
-  loadState();
+// --- Remote Synchronization ---
+async function fetchRemoteData() {
+  const owner = 'bcyekyascenehai-password';
+  const repo = 'ai-performance-tracker';
+  const path = 'data.json';
+  const remoteUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=${Date.now()}`;
   
-  // Set default active student if empty
+  try {
+    const res = await fetch(remoteUrl);
+    if (res.status === 200) {
+      const data = await res.json();
+      state.students = data.students || [];
+      state.subjects = data.subjects || [];
+      state.grades = data.grades || [];
+      
+      // Update local storage cache
+      localStorage.setItem(STATE_KEY, JSON.stringify({
+        students: state.students,
+        subjects: state.subjects,
+        grades: state.grades
+      }));
+      console.log("Database successfully synced with GitHub raw content.");
+      return true;
+    }
+  } catch (e) {
+    console.warn("Failed to fetch remote data, using local fallback", e);
+  }
+  return false;
+}
+
+async function syncToGitHub(updatedData) {
+  const token = localStorage.getItem('github_pat');
+  if (!token) {
+    console.log("No GitHub token configured, running in local-only mode.");
+    return;
+  }
+  
+  const owner = 'bcyekyascenehai-password';
+  const repo = 'ai-performance-tracker';
+  const path = 'data.json';
+  
+  try {
+    const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const getRes = await fetch(getUrl, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    let sha = null;
+    if (getRes.status === 200) {
+      const fileData = await getRes.json();
+      sha = fileData.sha;
+    }
+    
+    const putRes = await fetch(getUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify({
+        message: `Sync database: ${new Date().toLocaleString()}`,
+        content: btoa(unescape(encodeURIComponent(JSON.stringify({
+          students: updatedData.students,
+          subjects: updatedData.subjects,
+          grades: updatedData.grades
+        }, null, 2)))),
+        sha: sha,
+        branch: 'main'
+      })
+    });
+    
+    if (putRes.status === 200 || putRes.status === 201) {
+      window.showToast("Database successfully published to GitHub!");
+    } else {
+      const errData = await putRes.json();
+      window.showToast(`GitHub Publish Failed: ${errData.message}`, "error");
+    }
+  } catch (error) {
+    console.error("Error syncing to GitHub", error);
+    window.showToast("Error syncing to GitHub", "error");
+  }
+}
+
+// --- Initialization ---
+async function init() {
+  loadState();
+  render();
+  
+  // Fetch fresh remote data asynchronously
+  const loadedRemote = await fetchRemoteData();
+  if (loadedRemote) {
+    if (state.students.length > 0 && (!state.activeStudentId || !state.students.some(s => s.id === state.activeStudentId))) {
+      state.activeStudentId = state.students[0].id;
+    }
+    render();
+  }
+  
   if (state.students.length > 0 && !state.activeStudentId) {
     state.activeStudentId = state.students[0].id;
   }
@@ -30,7 +126,6 @@ function init() {
   // Add listeners for dynamic contents (delegated events)
   setupEventListeners();
   
-  // Initial Render
   render();
 }
 
@@ -71,7 +166,6 @@ function loadState() {
     state.grades = [...DEFAULT_GRADES];
   }
   
-  // Restore Admin Session if exists
   const isAdmin = sessionStorage.getItem('ai_tracker_admin_session');
   state.isAdminAuthenticated = isAdmin === 'true';
 }
@@ -82,6 +176,9 @@ function saveState() {
     subjects: state.subjects,
     grades: state.grades
   }));
+  
+  // Push updates to GitHub in the background
+  syncToGitHub(state);
 }
 
 // --- Routing & View Switches ---
@@ -176,6 +273,32 @@ function bindAdminEvents() {
       }
     });
     return; // Stop if not authenticated yet
+  }
+  
+  // 1.1 GitHub Token Save
+  const saveTokenBtn = document.getElementById('save-github-token-btn');
+  if (saveTokenBtn) {
+    saveTokenBtn.addEventListener('click', () => {
+      const tokenInput = document.getElementById('github-pat-input');
+      const tokenValue = tokenInput.value.trim();
+      if (tokenValue) {
+        localStorage.setItem('github_pat', tokenValue);
+        showToast("GitHub Access Token configured!");
+        render();
+      } else {
+        showToast("Please enter a valid token.", "error");
+      }
+    });
+  }
+  
+  // 1.2 GitHub Token Clear
+  const clearTokenBtn = document.getElementById('clear-github-token-btn');
+  if (clearTokenBtn) {
+    clearTokenBtn.addEventListener('click', () => {
+      localStorage.removeItem('github_pat');
+      showToast("GitHub Token cleared. Auto-Sync deactivated.");
+      render();
+    });
   }
   
   // 2. Add New Grade Form

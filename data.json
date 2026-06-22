@@ -40,6 +40,12 @@
       "name": "Google NotebookLM",
       "description": "Research, audio generation, and notes compilation using Google NotebookLM.",
       "deadline": "2026-06-18"
+    },
+    {
+      "id": "sub6",
+      "name": "Session for to make AI tools - 20/6/26",
+      "description": "Attendance, output submission and participation in the Session for to make AI tools on 20 June 2026.",
+      "deadline": "Completed"
     }
   ],
   "grades": [
@@ -280,6 +286,62 @@
       "score": 0,
       "feedback": "❌ No Submission (Deadline Missed)",
       "date": "2026-06-18"
+    },
+    {
+      "studentId": "s5",
+      "subjectId": "sub6",
+      "score": 100,
+      "feedback": "Attended session and shared output (Performance: ⭐⭐⭐⭐⭐)",
+      "date": "2026-06-20"
+    },
+    {
+      "studentId": "s8",
+      "subjectId": "sub6",
+      "score": 80,
+      "feedback": "Attended session and shared output (Performance: ⭐⭐⭐⭐)",
+      "date": "2026-06-20"
+    },
+    {
+      "studentId": "s6",
+      "subjectId": "sub6",
+      "score": 60,
+      "feedback": "Attended session and shared output (Performance: ⭐⭐⭐)",
+      "date": "2026-06-20"
+    },
+    {
+      "studentId": "s1",
+      "subjectId": "sub6",
+      "score": 0,
+      "feedback": "Absent: Left due to some urgent work",
+      "date": "2026-06-20"
+    },
+    {
+      "studentId": "s2",
+      "subjectId": "sub6",
+      "score": 0,
+      "feedback": "Absent: On leave",
+      "date": "2026-06-20"
+    },
+    {
+      "studentId": "s3",
+      "subjectId": "sub6",
+      "score": 0,
+      "feedback": "Absent: On leave",
+      "date": "2026-06-20"
+    },
+    {
+      "studentId": "s4",
+      "subjectId": "sub6",
+      "score": 80,
+      "feedback": "Attended session and shared output (Performance: ⭐⭐⭐⭐)",
+      "date": "2026-06-20"
+    },
+    {
+      "studentId": "s7",
+      "subjectId": "sub6",
+      "score": 100,
+      "feedback": "Attended session and shared output (Performance: ⭐⭐⭐⭐⭐)",
+      "date": "2026-06-20"
     }
   ]
 }

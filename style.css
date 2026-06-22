@@ -856,11 +856,12 @@ select:hover, select:focus {
 }
 
 .stat-card {
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 120px;
+  min-height: 145px;
+  height: auto;
 }
 
 .stat-label {
@@ -875,7 +876,7 @@ select:hover, select:focus {
   font-size: 2.25rem;
   font-family: var(--font-display);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .stat-desc {
@@ -1584,7 +1585,8 @@ footer a:hover {
   /* Stats Cards sizing */
   .stat-card {
     padding: 1rem;
-    height: 110px;
+    min-height: 130px;
+    height: auto;
   }
   
   .stat-val {

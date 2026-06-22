@@ -662,7 +662,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         <div class="glass-panel stat-card" style="border: 1px solid var(--border-color); border-left: 4px solid #10b981; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">🧠</div>
           <span class="stat-label" style="color: #10b981;">Max Precision</span>
-          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #10b981; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; max-width: calc(100% - 10px);">
+          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #10b981; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.5rem; max-width: calc(100% - 10px);">
             ${stats.strength}
           </span>
           <span class="stat-desc">Highest precision subsystem</span>
@@ -670,7 +670,7 @@ function renderStudentDashboard(state, activeStudentId, onStudentChange) {
         <div class="glass-panel stat-card" style="border: 1px solid var(--border-color); border-left: 4px solid #fb923c; position: relative;">
           <div style="position: absolute; right: 1rem; top: 1rem; font-size: 1.25rem; opacity: 0.6;">🎯</div>
           <span class="stat-label" style="color: #fb923c;">Friction Point</span>
-          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #fb923c; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; max-width: calc(100% - 10px);">
+          <span class="stat-val chalk-text" style="font-size: 1.15rem; color: #fb923c; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.5rem; max-width: calc(100% - 10px);">
             ${stats.weakness}
           </span>
           <span class="stat-desc">Lowest convergence subsystem</span>

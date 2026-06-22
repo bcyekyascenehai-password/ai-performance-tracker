@@ -132,7 +132,7 @@ function renderLeaderboard(state) {
               ${getInitials(top2.name)}
               <div class="podium-badge" style="background: var(--grad-secondary); color: #fff;">2</div>
             </div>
-            <div class="pedestal silver" style="height: 120px;">
+            <div class="pedestal silver" style="height: 180px;">
               <div class="podium-name">${top2.name}</div>
               <div class="chalk-text" style="font-size: 0.7rem; color: #a855f7; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Secondary Core</div>
               <div class="podium-score chalk-formula" style="color: #a855f7;">${top2.average} <span style="font-size: 0.75rem;">pts</span></div>
@@ -148,7 +148,7 @@ function renderLeaderboard(state) {
               ${getInitials(top1.name)}
               <div class="podium-badge" style="background: var(--grad-primary); color: #000;">1</div>
             </div>
-            <div class="pedestal gold" style="height: 160px;">
+            <div class="pedestal gold" style="height: 220px;">
               <div class="podium-name" style="font-weight: 700;">${top1.name}</div>
               <div class="chalk-text" style="font-size: 0.7rem; color: #00f2fe; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Primary Core</div>
               <div class="podium-score chalk-formula" style="color: #00f2fe; font-size: 1.35rem;">${top1.average} <span style="font-size: 0.75rem;">pts</span></div>
@@ -164,7 +164,7 @@ function renderLeaderboard(state) {
               ${getInitials(top3.name)}
               <div class="podium-badge" style="background: var(--grad-accent); color: #fff;">3</div>
             </div>
-            <div class="pedestal bronze" style="height: 90px;">
+            <div class="pedestal bronze" style="height: 140px;">
               <div class="podium-name">${top3.name}</div>
               <div class="chalk-text" style="font-size: 0.7rem; color: #10b981; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Auxiliary Node</div>
               <div class="podium-score chalk-formula" style="color: #10b981;">${top3.average} <span style="font-size: 0.75rem;">pts</span></div>
